@@ -119,7 +119,9 @@ export default function MarketPage() {
     return (
         <>
             <div
-                className="group relative mx-auto w-[88%] max-w-6xl overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#4169e1] to-[#1e3a8a] shadow-2xl shadow-blue-500/30 ring-1 ring-black/5 max-h-[220px]
+                className="group relative mx-auto w-[88%] max-w-6xl overflow-hidden 
+                rounded-[2rem] bg-gradient-to-br from-[#4169e1] to-[#1e3a8a]
+                 shadow-2xl shadow-blue-500/30 ring-1 ring-black/5 max-h-[220px]
 sm:max-h-[320px]
 md:max-h-[420px]
 lg:max-h-[520px]"
@@ -130,7 +132,8 @@ lg:max-h-[520px]"
                 {images.map((src, i) => (
                     <div
                         key={src}
-                        className={`absolute inset-0 transition-opacity duration-1000 ease-out ${i === index ?
+                        className={`absolute inset-0 transition-opacity duration-1000 
+                            ease-out ${i === index ?
                             "opacity-100" : "opacity-0"
                             }`}
                     >
@@ -155,7 +158,10 @@ lg:max-h-[520px]"
                     type="button"
                     onClick={prev}
                     aria-label="Previous slide"
-                    className="absolute left-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/20 text-white opacity-0 backdrop-blur-md transition-all duration-300 hover:bg-white/30 group-hover:opacity-100 sm:left-6 sm:h-12 sm:w-12"
+                    className="absolute left-4 top-1/2 flex h-10 w-10 -translate-y-1/2 
+                    items-center justify-center rounded-full bg-white/20 text-white 
+                    opacity-0 backdrop-blur-md transition-all duration-300 hover:bg-white/30
+                     group-hover:opacity-100 sm:left-6 sm:h-12 sm:w-12"
                 >
                     ❮
                 </button>
@@ -163,7 +169,10 @@ lg:max-h-[520px]"
                     type="button"
                     onClick={next}
                     aria-label="Next slide"
-                    className="absolute right-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/20 text-white opacity-0 backdrop-blur-md transition-all duration-300 hover:bg-white/30 group-hover:opacity-100 sm:right-6 sm:h-12 sm:w-12"
+                    className="absolute right-4 top-1/2 flex h-10 w-10 -translate-y-1/2 
+                    items-center justify-center rounded-full bg-white/20 text-white opacity-0
+                     backdrop-blur-md transition-all duration-300 hover:bg-white/30
+                      group-hover:opacity-100 sm:right-6 sm:h-12 sm:w-12"
                 >
                     ❯
                 </button>
@@ -176,7 +185,9 @@ lg:max-h-[520px]"
                             type="button"
                             onClick={() => setIndex(i)}
                             aria-label={`Go to slide ${i + 1}`}
-                            className={`h-1.5 rounded-full transition-all duration-300 ${i === index ? "w-6 bg-white" : "w-1.5 bg-white/50 hover:bg-white/70"
+                            className={`h-1.5 rounded-full transition-all duration-300
+                                 ${i === index ? "w-6 bg-white" :
+                                     "w-1.5 bg-white/50 hover:bg-white/70"
                                 }`}
                         />
                     ))}

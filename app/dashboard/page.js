@@ -1,6 +1,12 @@
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
+import React, { useEffect, useState, useRef, useCallback, useMemo } from "react";
+import useEmblaCarousel from "embla-carousel-react"
+import Autoplay from "embla-carousel-autoplay"
+import { images } from "@/components/util";
+import SmartLink from "@/components/SmartLink";
 
 import {
   ChevronRight,
@@ -103,8 +109,55 @@ export default async function DashboardPage() {
 
   const firstName =
     user?.name?.split(" ")[0] || "there";
+  const timeoutRef = useRef(null);
+  const touchStart = useRef(0);
 
+  const [heroRatio, setHeroRatio] = useState(2.3);
 
+  const handleHeroImageLoad = (e) => {
+    const { naturalWidth, naturalHeight } = e.target;
+    if (naturalWidth && naturalHeight) {
+      setHeroRatio(naturalWidth / naturalHeight);
+    }
+  };
+  const next = () =>
+    setIndex((i) => (i === images.length - 1 ? 0 : i + 1));
+  const prev = () =>
+    setIndex((i) => (i === 0 ? images.length - 1 : i - 1));
+
+  useEffect(() => {
+    timeoutRef.current = setTimeout(next, 3000);
+    return () => clearTimeout(timeoutRef.current);
+  }, [index]);
+  const onTouchStart = (e) => (touchStart.current = e.touches[0].clientX);
+  const onTouchEnd = (e) => {
+    const diff = touchStart.current - e.changedTouches[0].clientX;
+    if (diff > 50) next();
+    if (diff < -50) prev();
+  };
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
+      align: "start",
+      loop: true,
+      slidesToScroll: 1,
+    },
+    [Autoplay({ delay: 3000, stopOnInteraction: false })]
+  )
+
+  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [scrollSnaps, setScrollSnaps] = useState([])
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return
+    setSelectedIndex(emblaApi.selectedScrollSnap())
+  }, [emblaApi])
+
+  useEffect(() => {
+    if (!emblaApi) return
+
+    setScrollSnaps(emblaApi.scrollSnapList())
+    emblaApi.on("select", onSelect)
+    onSelect()
+  }, [emblaApi, onSelect])
   // ============================================================
   // 7. RENDER
   // ============================================================
@@ -187,9 +240,9 @@ export default async function DashboardPage() {
 
           <div>
 
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#5d9c7b]">
+            {/* <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#5d9c7b]">
               Your dashboard
-            </p>
+            </p> */}
 
             <h1 className="mt-3 text-3xl font-bold tracking-tight text-[#173d30] sm:text-5xl">
               Good to see you, {firstName}.
@@ -260,8 +313,8 @@ export default async function DashboardPage() {
                 <div className="inline-flex items-center gap-2 rounded-full bg-[#edf6f0] px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#397054]">
                   <span
                     className={`h-2 w-2 rounded-full ${stats.workoutCompletedToday
-                        ? "bg-[#397054]"
-                        : "animate-pulse bg-[#f59e0b]"
+                      ? "bg-[#397054]"
+                      : "animate-pulse bg-[#f59e0b]"
                       }`}
                   />
                   {stats.workoutCompletedToday
