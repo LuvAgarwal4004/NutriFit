@@ -111,6 +111,70 @@ export default async function DashboardPage() {
 
   return (
     <main className="min-h-screen bg-[#f7faf8] text-[#17231e]">
+      <div
+        className="group relative mx-auto w-[88%] max-w-6xl overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#4169e1] to-[#1e3a8a] shadow-2xl shadow-blue-500/30 ring-1 ring-black/5 max-h-[220px]
+      sm:max-h-[320px]
+      md:max-h-[420px]
+      lg:max-h-[520px]"
+        style={{ aspectRatio: heroRatio }}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+      >
+        {images.map((src, i) => (
+          <div
+            key={src}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-out ${i === index ?
+              "opacity-100" : "opacity-0"
+              }`}
+          >
+            <Image
+              src={src}
+              alt={`Featured collection ${i + 1}`}
+              fill
+              priority={i === 0}
+              quality={75}
+              sizes="(max-width: 768px) 100vw, 1200px"
+              className="object-cover"
+              onLoad={i === 0 ? handleHeroImageLoad : undefined}
+            />
+          </div>
+        ))}
+
+        {/* gradient overlay for depth */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/10" />
+
+        {/* arrows */}
+        <button
+          type="button"
+          onClick={prev}
+          aria-label="Previous slide"
+          className="absolute left-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/20 text-white opacity-0 backdrop-blur-md transition-all duration-300 hover:bg-white/30 group-hover:opacity-100 sm:left-6 sm:h-12 sm:w-12"
+        >
+          ❮
+        </button>
+        <button
+          type="button"
+          onClick={next}
+          aria-label="Next slide"
+          className="absolute right-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/20 text-white opacity-0 backdrop-blur-md transition-all duration-300 hover:bg-white/30 group-hover:opacity-100 sm:right-6 sm:h-12 sm:w-12"
+        >
+          ❯
+        </button>
+
+        {/* dots */}
+        <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 gap-2">
+          {images.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => setIndex(i)}
+              aria-label={`Go to slide ${i + 1}`}
+              className={`h-1.5 rounded-full transition-all duration-300 ${i === index ? "w-6 bg-white" : "w-1.5 bg-white/50 hover:bg-white/70"
+                }`}
+            />
+          ))}
+        </div>
+      </div>
 
       <div className="mx-auto max-w-7xl px-5 py-10 sm:px-8 sm:py-14">
 
@@ -195,11 +259,10 @@ export default async function DashboardPage() {
 
                 <div className="inline-flex items-center gap-2 rounded-full bg-[#edf6f0] px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#397054]">
                   <span
-                    className={`h-2 w-2 rounded-full ${
-                      stats.workoutCompletedToday
+                    className={`h-2 w-2 rounded-full ${stats.workoutCompletedToday
                         ? "bg-[#397054]"
                         : "animate-pulse bg-[#f59e0b]"
-                    }`}
+                      }`}
                   />
                   {stats.workoutCompletedToday
                     ? "Completed"
