@@ -129,7 +129,7 @@ lg:h-[520px]"
                             priority={i === 0}
                             quality={75}
                             sizes="(max-width: 768px) 100vw, 1200px"
-                            className={`object-cover ${i === index ? "carousel-zoom" : ""}`}
+                            className="object-contain"
                         />
                     </div>
                 ))}
@@ -168,16 +168,6 @@ lg:h-[520px]"
                         />
                     ))}
                 </div>
-
-                <style>{`
-                    @keyframes carouselZoom {
-                        from { transform: scale(1); }
-                        to { transform: scale(1.08); }
-                    }
-                    .carousel-zoom {
-                        animation: carouselZoom 6s ease-out forwards;
-                    }
-                `}</style>
             </div>
             <div className=" flex flex-col items-center justify-center"  >
                 <div className="text-3xl
