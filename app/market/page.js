@@ -108,57 +108,76 @@ export default function MarketPage() {
     return (
         <>
             <div
-                className="relative w-full h-[220px]
+                className="group relative mx-auto h-[220px] w-[88%] max-w-6xl overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#4169e1] to-[#1e3a8a] shadow-2xl shadow-blue-500/30 ring-1 ring-black/5
 sm:h-[320px]
 md:h-[420px]
-lg:h-[520px] overflow-hidden rounded-lg bg-[#4169e1] shadow shadow-2xl shadow-blue-500"
+lg:h-[520px]"
                 onTouchStart={onTouchStart}
                 onTouchEnd={onTouchEnd}
             >
                 {images.map((src, i) => (
                     <div
                         key={src}
-                        className={`absolute inset-0 transition-opacity duration-700 ${i === index ?
+                        className={`absolute inset-0 transition-opacity duration-1000 ease-out ${i === index ?
                             "opacity-100" : "opacity-0"
                             }`}
                     >
                         <Image
                             src={src}
-                            alt=""
+                            alt={`Featured collection ${i + 1}`}
                             fill
                             priority={i === 0}
                             quality={75}
                             sizes="(max-width: 768px) 100vw, 1200px"
-                            className="object-cover"
+                            className={`object-cover ${i === index ? "carousel-zoom" : ""}`}
                         />
                     </div>
                 ))}
 
+                {/* gradient overlay for depth */}
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/10" />
+
                 {/* arrows */}
                 <button
+                    type="button"
                     onClick={prev}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/60 p-2 rounded-full"
+                    aria-label="Previous slide"
+                    className="absolute left-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/20 text-white opacity-0 backdrop-blur-md transition-all duration-300 hover:bg-white/30 group-hover:opacity-100 sm:left-6 sm:h-12 sm:w-12"
                 >
                     ❮
                 </button>
                 <button
+                    type="button"
                     onClick={next}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/60 p-2 rounded-full"
+                    aria-label="Next slide"
+                    className="absolute right-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/20 text-white opacity-0 backdrop-blur-md transition-all duration-300 hover:bg-white/30 group-hover:opacity-100 sm:right-6 sm:h-12 sm:w-12"
                 >
                     ❯
                 </button>
 
                 {/* dots */}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 gap-2">
                     {images.map((_, i) => (
                         <button
                             key={i}
+                            type="button"
                             onClick={() => setIndex(i)}
-                            className={`w-3 h-3 rounded-full ${i === index ? "bg-white" : "bg-white/50"
+                            aria-label={`Go to slide ${i + 1}`}
+                            className={`h-1.5 rounded-full transition-all duration-300 ${i === index ? "w-6 bg-white" : "w-1.5 bg-white/50 hover:bg-white/70"
                                 }`}
                         />
                     ))}
                 </div>
+
+                <style jsx>{`
+                    @keyframes carouselZoom {
+                        from { transform: scale(1); }
+                        to { transform: scale(1.08); }
+                    }
+                    .carousel-zoom {
+                        animation: carouselZoom 6s ease-out forwards;
+                    }
+                `}</style>
             </div>
             <div className=" flex flex-col items-center justify-center"  >
                 <div className="text-3xl
