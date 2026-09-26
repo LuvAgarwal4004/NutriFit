@@ -13,6 +13,17 @@ export default function MarketPage() {
     const [trends, setTrends] = useState([]);
     const [collectionData, setCollectionData] = useState([]);
 
+    // Banner shape starts at a sensible default, then locks to the
+    // real image's own aspect ratio once it loads.
+    const [heroRatio, setHeroRatio] = useState(2.3);
+
+    const handleHeroImageLoad = (e) => {
+        const { naturalWidth, naturalHeight } = e.target;
+        if (naturalWidth && naturalHeight) {
+            setHeroRatio(naturalWidth / naturalHeight);
+        }
+    };
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -108,10 +119,11 @@ export default function MarketPage() {
     return (
         <>
             <div
-                className="group relative mx-auto h-[220px] w-[88%] max-w-6xl overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#4169e1] to-[#1e3a8a] shadow-2xl shadow-blue-500/30 ring-1 ring-black/5
-sm:h-[320px]
-md:h-[420px]
-lg:h-[520px]"
+                className="group relative mx-auto w-[88%] max-w-6xl overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#4169e1] to-[#1e3a8a] shadow-2xl shadow-blue-500/30 ring-1 ring-black/5 max-h-[220px]
+sm:max-h-[320px]
+md:max-h-[420px]
+lg:max-h-[520px]"
+                style={{ aspectRatio: heroRatio }}
                 onTouchStart={onTouchStart}
                 onTouchEnd={onTouchEnd}
             >
@@ -129,7 +141,8 @@ lg:h-[520px]"
                             priority={i === 0}
                             quality={75}
                             sizes="(max-width: 768px) 100vw, 1200px"
-                            className="object-contain"
+                            className="object-cover"
+                            onLoad={i === 0 ? handleHeroImageLoad : undefined}
                         />
                     </div>
                 ))}
