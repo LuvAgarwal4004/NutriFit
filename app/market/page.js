@@ -169,7 +169,7 @@ lg:h-[520px]"
                     ))}
                 </div>
 
-                <style jsx>{`
+                <style>{`
                     @keyframes carouselZoom {
                         from { transform: scale(1); }
                         to { transform: scale(1.08); }
