@@ -1,73 +1,9 @@
-// import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 import Reveal from "./Reveal";
-
-/* =========================================
-   Scroll Reveal Animation
-   =========================================
-   useRef gives every Reveal component a direct,
-   stable reference to its DOM element.
-
-   When the element enters the viewport,
-   IntersectionObserver changes `visible` to true.
-========================================= */
-
-// function Reveal({ children, className = "", delay = 0 }) {
-//   const elementRef = useRef(null);
-//   const [visible, setVisible] = useState(false);
-
-//   useEffect(() => {
-//     const element = elementRef.current;
-
-//     if (!element) return;
-
-//     const observer = new IntersectionObserver(
-//       ([entry]) => {
-//         if (entry.isIntersecting) {
-//           setVisible(true);
-
-//           // We only need the animation once.
-//           observer.unobserve(element);
-//         }
-//       },
-//       {
-//         threshold: 0.1,
-//       }
-//     );
-
-//     observer.observe(element);
-
-//     return () => {
-//       observer.disconnect();
-//     };
-//   }, []);
-
-//   return (
-//     <div
-//       ref={elementRef}
-//       className={`
-//         transition-all
-//         duration-1000
-//         ease-out
-//         ${
-//           visible
-//             ? "translate-y-0 opacity-100"
-//             : "translate-y-10 opacity-0"
-//         }
-//         ${className}
-//       `}
-//       style={{
-//         transitionDelay: `${delay}ms`,
-//       }}
-//     >
-//       {children}
-//     </div>
-//   );
-// }
 
 /* =========================================
    Arrow Icon
@@ -150,10 +86,6 @@ export default async function Home() {
               <div className="text-lg font-bold tracking-tight text-[#173d30]">
                 NutriFit
               </div>
-
-              {/* <div className="hidden text-[10px] font-medium uppercase tracking-[0.18em] text-[#779087] sm:block">
-                Train · Fuel · Track · Repeat
-              </div> */}
             </div>
           </Link>
 
@@ -235,26 +167,26 @@ export default async function Home() {
 
               <span className="h-2 w-2 animate-pulse rounded-full bg-[#63a77e]" />
 
-              Your fitness journey, upgraded
+              AI-generated workout & nutrition plans
 
             </div>
 
             <h1 className="text-5xl font-bold leading-[1.05] tracking-[-0.045em] text-[#173d30] sm:text-6xl lg:text-7xl">
 
-              Your entire
+              One AI coach.
 
               <span className="block text-[#5d9c7b]">
-                fitness journey.
+                Every part of your
               </span>
 
-              Under one roof.
+              fitness journey.
 
             </h1>
 
             <p className="mt-7 max-w-xl text-base leading-8 text-[#63766e] sm:text-lg">
-              NutriFit brings personalized AI fitness guidance, nutrition
-              support, fitness shopping, progress tracking and challenges
-              together in one place.
+              NutriFit builds your workout and nutrition plans around your
+              goals, tracks what you actually do, and adjusts as you go —
+              plus a marketplace for the gear and fuel to back it up.
             </p>
 
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
@@ -279,16 +211,38 @@ export default async function Home() {
 
             </div>
 
-            <div className="mt-9 flex flex-wrap gap-x-6 gap-y-3 text-sm text-[#6c7e76]">
+            {/* Animated value-prop banner */}
+
+            <div className="mt-8 overflow-hidden rounded-full border border-[#cfe0d7] bg-white/60 py-2.5 backdrop-blur">
+              <div className="marquee-track flex w-max gap-10 whitespace-nowrap text-xs font-semibold text-[#4d765f]">
+                {[0, 1].map((loop) => (
+                  <span key={loop} className="flex gap-10">
+                    {[
+                      "AI workout plans",
+                      "Smart nutrition guidance",
+                      "Daily progress tracking",
+                      "Fitness marketplace built in",
+                    ].map((item) => (
+                      <span key={item} className="flex items-center gap-2">
+                        <span className="h-1.5 w-1.5 rounded-full bg-[#63a77e]" />
+                        {item}
+                      </span>
+                    ))}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-7 flex flex-wrap gap-x-6 gap-y-3 text-sm text-[#6c7e76]">
 
               <div className="flex items-center gap-2">
                 <CheckIcon />
-                Personalized guidance
+                AI-generated workout & nutrition plans
               </div>
 
               <div className="flex items-center gap-2">
                 <CheckIcon />
-                Progress tracking
+                Daily progress tracking
               </div>
 
               <div className="flex items-center gap-2">
@@ -1186,6 +1140,16 @@ export default async function Home() {
         </div>
 
       </footer>
+
+      <style>{`
+        @keyframes marqueeScroll {
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
+        }
+        .marquee-track {
+          animation: marqueeScroll 16s linear infinite;
+        }
+      `}</style>
 
     </main>
   );

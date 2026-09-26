@@ -2,19 +2,17 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 
-import DashboardNavbar from "./DashboardNavbar";
-
 import {
-  Dumbbell,
-  Utensils,
-  TrendingUp,
-  Trophy,
-  Sparkles,
-  Flame,
   ChevronRight,
-  Activity,
+  Dumbbell,
+  Play,
+  Sparkles,
+  TrendingUp,
+  Utensils,
 } from "lucide-react";
+
 import DashboardStats from "./DashboardStats";
+import CoachFAB from "./CoachFAB";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 import connectDB from "@/db/connectDb";
@@ -114,165 +112,145 @@ export default async function DashboardPage() {
   return (
     <main className="min-h-screen bg-[#f7faf8] text-[#17231e]">
 
-      {/* =====================================================
-          NAVBAR
-      ===================================================== */}
-
-      {/* <DashboardNavbar user={user} /> */}
-
-
-      {/* =====================================================
-          DASHBOARD CONTENT
-      ===================================================== */}
-
       <div className="mx-auto max-w-7xl px-5 py-10 sm:px-8 sm:py-14">
 
 
         {/* =====================================================
-            GREETING
+            GREETING + PLAN SHORTCUTS
         ===================================================== */}
 
-        <section>
+        <section className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
 
-          <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#5d9c7b]">
-            Your dashboard
-          </p>
+          <div>
 
-          <h1 className="mt-3 text-3xl font-bold tracking-tight text-[#173d30] sm:text-5xl">
-            Good to see you, {firstName}.
-          </h1>
+            <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#5d9c7b]">
+              Your dashboard
+            </p>
 
-          <p className="mt-4 max-w-2xl leading-7 text-[#71817a]">
-            Your fitness journey starts here. Train, fuel your body,
-            track your progress and keep building momentum.
-          </p>
+            <h1 className="mt-3 text-3xl font-bold tracking-tight text-[#173d30] sm:text-5xl">
+              Good to see you, {firstName}.
+            </h1>
+
+            <p className="mt-4 max-w-2xl leading-7 text-[#71817a]">
+              Your fitness journey starts here. Train, fuel your body,
+              track your progress and keep building momentum.
+            </p>
+
+          </div>
+
+          <div className="flex flex-shrink-0 flex-wrap gap-3">
+
+            <Link
+              href="/dashboard/workout"
+              className="group inline-flex items-center gap-2.5 rounded-full border border-[#d8e5de] bg-white px-5 py-3 text-sm font-bold text-[#245543] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[#173d30] hover:shadow-md"
+            >
+              <Dumbbell size={16} />
+              View Workout Plan
+              <ChevronRight
+                size={15}
+                className="transition-transform duration-300 group-hover:translate-x-0.5"
+              />
+            </Link>
+
+            <Link
+              href="/dashboard/nutrition"
+              className="group inline-flex items-center gap-2.5 rounded-full bg-[#173d30] px-5 py-3 text-sm font-bold text-white shadow-lg shadow-[#173d30]/15 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#245543]"
+            >
+              <Utensils size={16} />
+              View Nutrition Plan
+              <ChevronRight
+                size={15}
+                className="transition-transform duration-300 group-hover:translate-x-0.5"
+              />
+            </Link>
+
+          </div>
 
         </section>
 
 
         {/* =====================================================
-            QUICK STATS
+            STATS + CONSISTENCY GRAPH
         ===================================================== */}
 
-        {/* <section className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-
-          <StatCard
-            icon={<Flame size={21} />}
-            label="Current streak"
-            value={`${stats.currentStreak} ${stats.currentStreak === 1
-                ? "day"
-                : "days"
-              }`}
-            description={
-              stats.currentStreak > 0
-                ? "Keep the streak going"
-                : "Start your streak today"
-            }
-          />
-
-
-          <StatCard
-            icon={<Activity size={21} />}
-            label="Weekly activity"
-            value={`${stats.weeklyActivity}%`}
-            description={
-              stats.workoutsCompletedThisWeek > 0
-                ? `${stats.workoutsCompletedThisWeek} workout${stats.workoutsCompletedThisWeek === 1
-                  ? ""
-                  : "s"
-                } completed this week`
-                : "No workouts logged this week"
-            }
-          />
-
-
-          <StatCard
-            icon={<Trophy size={21} />}
-            label="Rank"
-            value={stats.rank}
-            description={`${stats.pointsToNextRank} XP to next rank`}
-          />
-
-
-          <StatCard
-            icon={<TrendingUp size={21} />}
-            label="Points"
-            value={`${stats.xp} XP`}
-            description="Earn XP by completing activities"
-          />
-
-        </section> */}
         <DashboardStats />
 
+
         {/* =====================================================
-            MAIN ACTIONS
+            TODAY — HERO CARD
         ===================================================== */}
 
-        <section className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        <section className="mt-6">
 
-
-          {/* AI WORKOUT */}
-
-          <DashboardCard
-            href="/dashboard/workout"
-            icon={<Dumbbell size={24} />}
-            title="AI Fitness Coach"
-            description="Build a workout plan around your goals, experience, schedule and equipment."
-            action="Build my workout"
-          />
-
-
-          {/* NUTRITION */}
-
-          <DashboardCard
-            href="/dashboard/nutrition"
-            icon={<Utensils size={24} />}
-            title="AI Nutritionist"
-            description="Get personalized general nutrition guidance based on your fitness journey."
-            action="Explore nutrition"
-          />
-
-
-          {/* AI CHAT */}
-
-          <DashboardCard
-            href="/dashboard/coach"
-            icon={<Sparkles size={24} />}
-            title="AI Coach Chat"
-            description="Talk to your NutriFit AI coach about workouts, nutrition, recovery and your fitness journey."
-            action="Chat with NutriFit AI"
-          />
-
-
-          {/* AI INSIGHTS */}
-
-          <DashboardCard
-            href="/dashboard/insights"
-            icon={<Sparkles size={24} />}
-            title="AI Insights"
-            description="Your AI can analyze your workout and nutrition history, identify patterns and recommend changes to your plans."
-            action="View AI insights"
-          />
-
-
-          {/* TODAY */}
-
-          <DashboardCard
+          <Link
             href="/dashboard/today"
-            icon={<Activity size={24} />}
-            title="Today's Activity"
-            description="Start your workout, complete exercises and track the meals you eat today."
-            action="Start today's activity"
-          />
-          {/* My Progress */}
+            className="group relative block overflow-hidden rounded-[2.5rem] border border-[#e1eae5] bg-white p-8 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl sm:p-10"
+          >
 
-          <DashboardCard
-            href="/dashboard/progress"
-            icon={<TrendingUp size={24} />}
-            title="My Progress"
-            description="See your workout consistency, nutrition adherence, streaks, XP and fitness history."
-            action="View my progress"
-          />
+            <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#dceee3] opacity-60 blur-3xl transition-transform duration-700 group-hover:scale-110" />
+
+            <div className="relative flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+
+              <div className="max-w-xl">
+
+                <div className="inline-flex items-center gap-2 rounded-full bg-[#edf6f0] px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#397054]">
+                  <span
+                    className={`h-2 w-2 rounded-full ${
+                      stats.workoutCompletedToday
+                        ? "bg-[#397054]"
+                        : "animate-pulse bg-[#f59e0b]"
+                    }`}
+                  />
+                  {stats.workoutCompletedToday
+                    ? "Completed"
+                    : "Ready for you"}
+                </div>
+
+                <h2 className="mt-5 text-2xl font-bold text-[#173d30] sm:text-3xl">
+                  {stats.workoutCompletedToday
+                    ? "Nice work — today's workout is done."
+                    : "Today's workout is ready."}
+                </h2>
+
+                <p className="mt-3 leading-7 text-[#71817a]">
+                  {stats.workoutCompletedToday
+                    ? "Your progress has been logged. Come back tomorrow to keep the streak alive."
+                    : "Jump in and complete today's exercises, one step at a time."}
+                </p>
+
+                <span className="mt-6 inline-flex items-center gap-3 rounded-full bg-[#173d30] px-6 py-3.5 text-sm font-bold text-white transition-all duration-300 group-hover:gap-4 group-hover:bg-[#245543]">
+                  {stats.workoutCompletedToday ? (
+                    <>
+                      View today's activity
+                      <ChevronRight size={16} />
+                    </>
+                  ) : (
+                    <>
+                      <Play size={15} fill="currentColor" />
+                      Start today's workout
+                    </>
+                  )}
+                </span>
+
+              </div>
+
+              <div className="flex shrink-0 items-center justify-center">
+                <ProgressRing
+                  percent={
+                    stats.workoutCompletedToday ? 100 : stats.weeklyActivity
+                  }
+                  label={
+                    stats.workoutCompletedToday
+                      ? "Done"
+                      : `${stats.weeklyActivity}%`
+                  }
+                  sublabel="this week"
+                />
+              </div>
+
+            </div>
+
+          </Link>
 
         </section>
 
@@ -281,7 +259,7 @@ export default async function DashboardPage() {
             AI COACH FEATURE
         ===================================================== */}
 
-        <section className="mt-8 overflow-hidden rounded-[2rem] bg-[#173d30] text-white">
+        <section className="mt-6 overflow-hidden rounded-[2rem] bg-[#173d30] text-white">
 
           <div className="grid items-center gap-10 p-7 sm:p-10 lg:grid-cols-2 lg:p-12">
 
@@ -378,89 +356,136 @@ export default async function DashboardPage() {
 
 
         {/* =====================================================
-            TODAY
+            QUICK LINKS
         ===================================================== */}
 
-        <section className="mt-8">
+        <section className="mt-6 grid gap-4 sm:grid-cols-2">
 
-          <div className="flex items-end justify-between">
+          <QuickLinkCard
+            href="/dashboard/insights"
+            icon={<Sparkles size={20} />}
+            title="AI Insights"
+            description="See patterns in your training and nutrition."
+          />
 
-            <div>
-
-              <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#5d9c7b]">
-                Today
-              </p>
-
-              <h2 className="mt-2 text-2xl font-bold text-[#173d30]">
-                Keep moving forward.
-              </h2>
-
-            </div>
-
-          </div>
-
-
-          <div className="mt-5 grid gap-5 md:grid-cols-2">
-
-            <div className="rounded-3xl border border-[#e1eae5] bg-white p-6 shadow-sm">
-
-              <div className="flex items-center gap-4">
-
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#e1eee7] text-[#397054]">
-                  <Dumbbell size={22} />
-                </div>
-
-                <div>
-
-                  <p className="text-xs uppercase tracking-wider text-[#8a9992]">
-                    Workout
-                  </p>
-
-                  <h3 className="mt-1 font-bold text-[#24483a]">
-
-                    {stats.workoutCompletedToday
-                      ? "Workout completed"
-                      : "Workout not completed yet"}
-
-                  </h3>
-
-                </div>
-
-              </div>
-
-
-              <p className="mt-5 text-sm leading-6 text-[#71817a]">
-
-                {stats.workoutCompletedToday
-                  ? "Great work. Your completed workout has been added to your progress."
-                  : "Start today's workout, complete each exercise and track your progress."}
-
-              </p>
-
-
-              <Link
-                href="/dashboard/today"
-                className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-[#397054]"
-              >
-
-                {stats.workoutCompletedToday
-                  ? "View today's activity"
-                  : "Start today's activity"}
-
-                <ChevronRight size={16} />
-
-              </Link>
-
-            </div>
-
-          </div>
+          <QuickLinkCard
+            href="/dashboard/progress"
+            icon={<TrendingUp size={20} />}
+            title="My Progress"
+            description="Streaks, XP and your full fitness history."
+          />
 
         </section>
 
       </div>
 
+      <CoachFAB />
+
     </main>
   );
+}
+
+
+
+// ============================================================
+// PROGRESS RING
+// ============================================================
+
+function ProgressRing({ percent, label, sublabel }) {
+
+  const clamped =
+    Math.min(100, Math.max(0, percent || 0));
+
+  const radius = 50;
+
+  const circumference =
+    2 * Math.PI * radius;
+
+  const offset =
+    circumference -
+    (clamped / 100) * circumference;
+
+  return (
+
+    <div className="relative flex h-32 w-32 shrink-0 items-center justify-center">
+
+      <svg className="h-full w-full -rotate-90" viewBox="0 0 120 120">
+
+        <circle
+          cx="60"
+          cy="60"
+          r={radius}
+          fill="none"
+          stroke="#e1eee7"
+          strokeWidth="10"
+        />
+
+        <circle
+          cx="60"
+          cy="60"
+          r={radius}
+          fill="none"
+          stroke="#173d30"
+          strokeWidth="10"
+          strokeLinecap="round"
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+          className="transition-all duration-1000 ease-out"
+        />
+
+      </svg>
+
+      <div className="absolute flex flex-col items-center">
+
+        <span className="text-xl font-bold text-[#173d30]">
+          {label}
+        </span>
+
+        <span className="text-[10px] font-semibold uppercase tracking-wide text-[#8a9992]">
+          {sublabel}
+        </span>
+
+      </div>
+
+    </div>
+
+  );
+
+}
+
+
+
+// ============================================================
+// QUICK LINK CARD
+// ============================================================
+
+function QuickLinkCard({ href, icon, title, description }) {
+
+  return (
+
+    <Link
+      href={href}
+      className="group flex items-center gap-4 rounded-3xl border border-[#e1eae5] bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[#c5ddd0] hover:shadow-md"
+    >
+
+      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#e1eee7] text-[#397054] transition-transform duration-300 group-hover:scale-110">
+        {icon}
+      </div>
+
+      <div className="flex-1">
+        <p className="font-bold text-[#24483a]">{title}</p>
+        <p className="mt-0.5 text-xs text-[#82918a]">{description}</p>
+      </div>
+
+      <ChevronRight
+        size={16}
+        className="text-[#b6c4bd] transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[#397054]"
+      />
+
+    </Link>
+
+  );
+
 }
 
 
@@ -963,109 +988,6 @@ function formatDate(date) {
 
 
   return `${year}-${month}-${day}`;
-
-}
-
-
-
-// ============================================================
-// STAT CARD
-// ============================================================
-
-function StatCard({
-  icon,
-  label,
-  value,
-  description,
-}) {
-
-  return (
-
-    <div className="rounded-3xl border border-[#e1eae5] bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg">
-
-      <div className="flex items-center justify-between">
-
-        <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#e1eee7] text-[#397054]">
-
-          {icon}
-
-        </div>
-
-      </div>
-
-
-      <p className="mt-6 text-xs font-semibold uppercase tracking-wider text-[#8a9992]">
-        {label}
-      </p>
-
-
-      <p className="mt-1 text-2xl font-bold text-[#173d30]">
-        {value}
-      </p>
-
-
-      <p className="mt-2 text-xs text-[#82918a]">
-        {description}
-      </p>
-
-    </div>
-
-  );
-
-}
-
-
-
-// ============================================================
-// DASHBOARD CARD
-// ============================================================
-
-function DashboardCard({
-  href,
-  icon,
-  title,
-  description,
-  action,
-}) {
-
-  return (
-
-    <Link
-      href={href}
-      className="group rounded-[2rem] border border-[#e1eae5] bg-white p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#c5ddd0] hover:shadow-xl"
-    >
-
-      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#e1eee7] text-[#397054] transition-transform duration-300 group-hover:scale-110">
-
-        {icon}
-
-      </div>
-
-
-      <h3 className="mt-6 text-xl font-bold text-[#24483a]">
-        {title}
-      </h3>
-
-
-      <p className="mt-3 text-sm leading-7 text-[#71817a]">
-        {description}
-      </p>
-
-
-      <div className="mt-6 flex items-center gap-2 text-sm font-bold text-[#397054]">
-
-        {action}
-
-        <ChevronRight
-          size={16}
-          className="transition-transform group-hover:translate-x-1"
-        />
-
-      </div>
-
-    </Link>
-
-  );
 
 }
 

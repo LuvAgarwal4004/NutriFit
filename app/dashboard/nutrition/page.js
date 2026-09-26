@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import toast from "react-hot-toast";
 
@@ -25,6 +25,8 @@ export default function NutritionPage() {
   const [generating, setGenerating] =
     useState(false);
 
+  const autoGenerateTriggered = useRef(false);
+
 
   // ============================================================
   // LOAD SAVED PLAN
@@ -35,6 +37,21 @@ export default function NutritionPage() {
     loadPlan();
 
   }, []);
+
+
+  // Auto-generate a plan the first time we find none, instead of
+  // making the user press a button.
+  useEffect(() => {
+
+    if (loading || generating) return;
+    if (plan) return;
+    if (autoGenerateTriggered.current) return;
+
+    autoGenerateTriggered.current = true;
+    generatePlan();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, plan]);
 
 
   async function loadPlan() {
@@ -145,108 +162,57 @@ export default function NutritionPage() {
 
 
   // ============================================================
-  // LOADING
+  // LOADING / GENERATING / NO PLAN
   // ============================================================
 
-  if (loading) {
+  if (loading || !plan) {
 
     return (
-      <main className="flex min-h-screen items-center justify-center bg-[#f7faf8]">
+      <main className="flex min-h-screen items-center justify-center bg-[#f7faf8] px-5">
 
-        <div className="text-sm font-semibold text-[#5d9c7b]">
-          Loading your nutrition plan...
-        </div>
+        <div className="max-w-md text-center">
 
-      </main>
-    );
-  }
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl bg-[#173d30] text-white shadow-lg">
+            <Sparkles
+              size={26}
+              className={!loading ? "animate-pulse" : ""}
+            />
+          </div>
 
+          <h1 className="mt-6 text-2xl font-bold text-[#173d30]">
+            {loading
+              ? "Loading your nutrition plan..."
+              : generating
+              ? "Building your nutrition plan..."
+              : "We couldn't create your plan"}
+          </h1>
 
-  // ============================================================
-  // NO PLAN
-  // ============================================================
+          <p className="mt-2 text-sm leading-6 text-[#71817a]">
+            {loading
+              ? "One moment."
+              : generating
+              ? "NutriFit AI is using your goals and preferences from onboarding to put this together."
+              : "Something went wrong while generating your plan."}
+          </p>
 
-  if (!plan) {
+          {!loading && !generating && (
 
-    return (
-      <main className="min-h-screen bg-[#f7faf8] px-5 py-10 text-[#17231e] sm:px-8">
+            <button
+              onClick={generatePlan}
+              className="mt-6 rounded-full bg-[#173d30] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#245543]"
+            >
+              Try again
+            </button>
 
-        <div className="mx-auto max-w-4xl">
-
+          )}
 
           <Link
             href="/dashboard"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-[#397054]"
+            className="mt-8 inline-flex items-center gap-2 text-xs font-semibold text-[#8a9992] hover:text-[#397054]"
           >
-            <ArrowLeft size={17} />
-
+            <ArrowLeft size={13} />
             Back to dashboard
           </Link>
-
-
-          <div className="mt-8 overflow-hidden rounded-[2rem] bg-[#173d30] text-white">
-
-            <div className="p-8 sm:p-12">
-
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10">
-                <Utensils size={26} />
-              </div>
-
-
-              <p className="mt-8 text-sm font-bold uppercase tracking-[0.18em] text-[#a8cbb7]">
-                AI Nutritionist
-              </p>
-
-
-              <h1 className="mt-3 text-3xl font-bold sm:text-5xl">
-                Your personalized nutrition plan.
-              </h1>
-
-
-              <p className="mt-5 max-w-2xl leading-7 text-[#c1d6ca]">
-                NutriFit will use the information you provided
-                during onboarding to create a nutrition plan
-                around your goal, diet, activity level and
-                meal preferences.
-              </p>
-
-
-              <button
-                type="button"
-                onClick={generatePlan}
-                disabled={generating}
-                className="mt-8 inline-flex items-center gap-3 rounded-full bg-white px-7 py-4 text-sm font-bold text-[#173d30] transition hover:-translate-y-0.5 hover:bg-[#edf6f0] disabled:cursor-not-allowed disabled:opacity-60"
-              >
-
-                {generating ? (
-                  <>
-                    <RefreshCw
-                      size={17}
-                      className="animate-spin"
-                    />
-
-                    Creating your plan...
-                  </>
-                ) : (
-                  <>
-                    <Sparkles size={17} />
-
-                    Generate My Nutrition Plan
-                  </>
-                )}
-
-              </button>
-
-            </div>
-
-          </div>
-
-
-          <p className="mt-5 text-center text-xs leading-5 text-[#8a9992]">
-            NutriFit provides general fitness and nutrition
-            guidance and is not a substitute for professional
-            medical advice.
-          </p>
 
         </div>
 
@@ -258,6 +224,10 @@ export default function NutritionPage() {
   // ============================================================
   // PLAN EXISTS
   // ============================================================
+
+  const todayName = new Date().toLocaleDateString(undefined, {
+    weekday: "long",
+  });
 
   return (
     <main className="min-h-screen bg-[#f7faf8] px-5 py-10 text-[#17231e] sm:px-8">
@@ -329,35 +299,48 @@ export default function NutritionPage() {
             MACROS
         ====================================================== */}
 
-        <section className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <section className="mt-8 grid gap-5 lg:grid-cols-[auto_1fr]">
 
-          <NutritionStat
-            icon={<Flame size={20} />}
-            label="Calories"
-            value={`${plan.caloriesTarget || 0}`}
-            unit="kcal/day"
-          />
+          <div className="flex items-center justify-center rounded-3xl border border-[#e1eae5] bg-white p-6 shadow-sm">
+            <MacroRing
+              protein={plan.proteinTarget || 0}
+              carbs={plan.carbsTarget || 0}
+              fats={plan.fatsTarget || 0}
+              calories={plan.caloriesTarget || 0}
+            />
+          </div>
 
-          <NutritionStat
-            icon={<Dumbbell size={20} />}
-            label="Protein"
-            value={`${plan.proteinTarget || 0}`}
-            unit="g/day"
-          />
+          <div className="grid gap-4 sm:grid-cols-2">
 
-          <NutritionStat
-            icon={<Utensils size={20} />}
-            label="Carbs"
-            value={`${plan.carbsTarget || 0}`}
-            unit="g/day"
-          />
+            <NutritionStat
+              icon={<Flame size={20} />}
+              label="Calories"
+              value={`${plan.caloriesTarget || 0}`}
+              unit="kcal/day"
+            />
 
-          <NutritionStat
-            icon={<Sparkles size={20} />}
-            label="Fats"
-            value={`${plan.fatsTarget || 0}`}
-            unit="g/day"
-          />
+            <NutritionStat
+              icon={<Dumbbell size={20} />}
+              label="Protein"
+              value={`${plan.proteinTarget || 0}`}
+              unit="g/day"
+            />
+
+            <NutritionStat
+              icon={<Utensils size={20} />}
+              label="Carbs"
+              value={`${plan.carbsTarget || 0}`}
+              unit="g/day"
+            />
+
+            <NutritionStat
+              icon={<Sparkles size={20} />}
+              label="Fats"
+              value={`${plan.fatsTarget || 0}`}
+              unit="g/day"
+            />
+
+          </div>
 
         </section>
 
@@ -366,7 +349,7 @@ export default function NutritionPage() {
             HYDRATION
         ====================================================== */}
 
-        <section className="mt-8 rounded-3xl border border-[#dfe9e3] bg-white p-6 shadow-sm">
+        <section className="mt-6 rounded-3xl border border-[#dfe9e3] bg-white p-6 shadow-sm">
 
           <div className="flex items-center gap-4">
 
@@ -409,11 +392,19 @@ export default function NutritionPage() {
           <div className="mt-5 space-y-6">
 
             {(plan.days || []).map(
-              (day, index) => (
+              (day, index) => {
+
+                const isToday = day.day === todayName;
+
+                return (
 
                 <div
                   key={`${day.day}-${index}`}
-                  className="overflow-hidden rounded-[2rem] border border-[#e1eae5] bg-white shadow-sm"
+                  className={`overflow-hidden rounded-[2rem] border bg-white shadow-sm transition-colors ${
+                    isToday
+                      ? "border-[#397054] ring-1 ring-[#397054]"
+                      : "border-[#e1eae5]"
+                  }`}
                 >
 
                   {/* DAY HEADER */}
@@ -424,9 +415,16 @@ export default function NutritionPage() {
 
                       <div>
 
-                        <p className="text-xs font-bold uppercase tracking-wider text-[#8a9992]">
-                          Day {index + 1}
-                        </p>
+                        <div className="flex items-center gap-2">
+                          <p className="text-xs font-bold uppercase tracking-wider text-[#8a9992]">
+                            Day {index + 1}
+                          </p>
+                          {isToday && (
+                            <span className="rounded-full bg-[#397054] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
+                              Today
+                            </span>
+                          )}
+                        </div>
 
                         <h3 className="mt-1 text-xl font-bold text-[#24483a]">
                           {day.day}
@@ -523,7 +521,9 @@ export default function NutritionPage() {
 
                 </div>
 
-              )
+                );
+
+              }
             )}
 
           </div>
@@ -591,6 +591,56 @@ export default function NutritionPage() {
       </div>
 
     </main>
+  );
+}
+
+
+// ============================================================
+// MACRO RING
+// ============================================================
+
+function MacroRing({ protein, carbs, fats, calories }) {
+
+  const proteinCalories = protein * 4;
+  const carbCalories = carbs * 4;
+  const fatCalories = fats * 9;
+  const total = proteinCalories + carbCalories + fatCalories || 1;
+
+  const proteinPercent = (proteinCalories / total) * 100;
+  const carbPercent = (carbCalories / total) * 100;
+
+  const gradient = `conic-gradient(#397054 0% ${proteinPercent}%, #7fb896 ${proteinPercent}% ${
+    proteinPercent + carbPercent
+  }%, #d7ecdf ${proteinPercent + carbPercent}% 100%)`;
+
+  return (
+    <div className="text-center">
+
+      <div
+        className="relative mx-auto flex h-36 w-36 items-center justify-center rounded-full"
+        style={{ background: gradient }}
+      >
+        <div className="flex h-24 w-24 flex-col items-center justify-center rounded-full bg-white">
+          <span className="text-lg font-bold text-[#173d30]">{calories}</span>
+          <span className="text-[9px] font-semibold uppercase tracking-wide text-[#8a9992]">
+            kcal/day
+          </span>
+        </div>
+      </div>
+
+      <div className="mt-4 flex flex-wrap justify-center gap-x-3 gap-y-1.5 text-[11px] font-semibold">
+        <span className="flex items-center gap-1.5 text-[#52665d]">
+          <span className="h-2 w-2 rounded-full bg-[#397054]" /> Protein
+        </span>
+        <span className="flex items-center gap-1.5 text-[#52665d]">
+          <span className="h-2 w-2 rounded-full bg-[#7fb896]" /> Carbs
+        </span>
+        <span className="flex items-center gap-1.5 text-[#52665d]">
+          <span className="h-2 w-2 rounded-full bg-[#d7ecdf]" /> Fats
+        </span>
+      </div>
+
+    </div>
   );
 }
 

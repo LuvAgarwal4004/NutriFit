@@ -10,6 +10,8 @@ import {
   Dumbbell,
   Utensils,
   Play,
+  PlayCircle,
+  Timer,
   Trophy,
   Loader2,
 } from "lucide-react";
@@ -527,6 +529,12 @@ export default function TodayPage() {
     workoutLog?.exercises?.length || 0;
 
 
+  const exerciseProgress =
+    totalExercises > 0
+      ? Math.round((completedExercises / totalExercises) * 100)
+      : 0;
+
+
   const completedMeals =
     nutritionLog?.meals?.filter(
       (meal) =>
@@ -626,23 +634,41 @@ export default function TodayPage() {
 
             {!workoutLog && (
 
-              <div className="text-center">
+              <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#173d30] to-[#2c5643] p-8 text-center text-white sm:p-12">
 
-                <p className="text-sm text-[#71817a]">
-                  Your workout is ready.
-                </p>
+                <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-white/5 blur-3xl" />
+                <div className="pointer-events-none absolute -bottom-16 -left-16 h-56 w-56 rounded-full bg-white/5 blur-3xl" />
 
-                <button
-                  onClick={startWorkout}
-                  disabled={actionLoading}
-                  className="mt-5 inline-flex items-center gap-3 rounded-full bg-[#173d30] px-7 py-4 text-sm font-bold text-white transition hover:bg-[#245442] disabled:opacity-50"
-                >
+                <div className="relative">
 
-                  <Play size={17} />
+                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#a8cbb7]">
+                    {workoutDay?.focus || "Ready when you are"}
+                  </p>
 
-                  Start Workout
+                  <h3 className="mx-auto mt-3 max-w-sm text-2xl font-bold sm:text-3xl">
+                    {workoutDay?.exercises?.length || 0} exercises ·{" "}
+                    {workoutDay?.estimatedDuration || "~30"} min
+                  </h3>
 
-                </button>
+                  <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-[#c6d8cf]">
+                    Everything's set up for today. Hit start and work
+                    through each exercise at your own pace.
+                  </p>
+
+                  <button
+                    onClick={startWorkout}
+                    disabled={actionLoading}
+                    className="group relative mt-7 inline-flex items-center gap-3 rounded-full bg-white px-8 py-4 text-sm font-bold text-[#173d30] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-2xl disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    <span className="pointer-events-none absolute inset-0 -z-10 animate-ping rounded-full bg-white/30" />
+
+                    <Play size={17} fill="currentColor" />
+
+                    {actionLoading ? "Starting..." : "Start Workout"}
+
+                  </button>
+
+                </div>
 
               </div>
 
@@ -657,24 +683,36 @@ export default function TodayPage() {
 
               <div>
 
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-4">
 
-                  <div>
+                  <div className="flex-1">
 
-                    <p className="text-sm font-bold text-[#24483a]">
-                      {completedExercises} /{" "}
-                      {totalExercises} exercises
-                    </p>
+                    <div className="flex items-center justify-between">
 
-                    <p className="mt-1 text-xs text-[#8a9992]">
+                      <p className="text-sm font-bold text-[#24483a]">
+                        {completedExercises} /{" "}
+                        {totalExercises} exercises
+                      </p>
+
+                      <span className="rounded-full bg-[#edf6f0] px-3 py-1 text-xs font-bold text-[#397054]">
+                        {exerciseProgress}%
+                      </span>
+
+                    </div>
+
+                    <div className="mt-2 h-2 overflow-hidden rounded-full bg-[#edf2ef]">
+
+                      <div
+                        className="h-full rounded-full bg-[#397054] transition-all duration-500"
+                        style={{ width: `${exerciseProgress}%` }}
+                      />
+
+                    </div>
+
+                    <p className="mt-2 text-xs text-[#8a9992]">
                       Complete each exercise as you go.
                     </p>
 
-                  </div>
-
-
-                  <div className="rounded-full bg-[#edf6f0] px-4 py-2 text-xs font-bold text-[#397054]">
-                    In progress
                   </div>
 
                 </div>
@@ -697,69 +735,97 @@ export default function TodayPage() {
 
                       return (
 
-                        <button
+                        <div
                           key={index}
-                          type="button"
-                          onClick={() =>
-                            toggleExercise(
-                              index,
-                              completed
-                            )
-                          }
-                          disabled={actionLoading}
-                          className={`flex w-full items-center gap-4 rounded-2xl border p-5 text-left transition ${
+                          className={`rounded-2xl border p-5 transition-colors duration-300 ${
                             completed
                               ? "border-[#b9d8c6] bg-[#edf6f0]"
-                              : "border-[#e1eae5] bg-[#f9fbfa] hover:border-[#bdd7c8]"
+                              : "border-[#e1eae5] bg-[#f9fbfa]"
                           }`}
                         >
 
-                          <div
-                            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
-                              completed
-                                ? "bg-[#397054] text-white"
-                                : "bg-white text-[#8a9992]"
-                            }`}
-                          >
+                          <div className="flex items-center gap-4">
 
-                            {completed ? (
-                              <Check size={19} />
-                            ) : (
-                              <span className="text-sm font-bold">
-                                {index + 1}
+                            <button
+                              type="button"
+                              onClick={() =>
+                                toggleExercise(
+                                  index,
+                                  completed
+                                )
+                              }
+                              disabled={actionLoading}
+                              className="flex flex-1 items-center gap-4 text-left"
+                            >
+
+                              <span
+                                className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-colors duration-300 ${
+                                  completed
+                                    ? "bg-[#397054] text-white"
+                                    : "bg-white text-[#8a9992] ring-1 ring-[#dbe6e0]"
+                                }`}
+                              >
+
+                                {completed ? (
+                                  <Check size={19} />
+                                ) : (
+                                  <span className="text-sm font-bold">
+                                    {index + 1}
+                                  </span>
+                                )}
+
                               </span>
+
+                              <span>
+
+                                <p
+                                  className={`font-bold ${
+                                    completed
+                                      ? "text-[#397054] line-through"
+                                      : "text-[#24483a]"
+                                  }`}
+                                >
+                                  {exercise.name}
+                                </p>
+
+                                <p className="mt-1 text-xs text-[#8a9992]">
+                                  {exercise.sets} sets ×{" "}
+                                  {exercise.reps}
+                                </p>
+
+                              </span>
+
+                            </button>
+
+                            <span className="shrink-0 text-xs font-bold text-[#397054]">
+                              {completed
+                                ? "Done"
+                                : "Complete"}
+                            </span>
+
+                          </div>
+
+                          <div className="mt-4 flex flex-wrap gap-2 border-t border-black/5 pt-4">
+
+                            <a
+                              href={`https://www.youtube.com/results?search_query=${encodeURIComponent(
+                                `${exercise.name} exercise proper form tutorial`
+                              )}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-[11px] font-bold text-[#397054] ring-1 ring-[#dbe6e0] transition hover:bg-[#edf6f0]"
+                            >
+                              <PlayCircle size={13} />
+                              Watch tutorial
+                            </a>
+
+                            {exercise.restSeconds > 0 && (
+                              <RestTimer seconds={exercise.restSeconds} />
                             )}
 
                           </div>
 
-
-                          <div className="flex-1">
-
-                            <p
-                              className={`font-bold ${
-                                completed
-                                  ? "text-[#397054] line-through"
-                                  : "text-[#24483a]"
-                              }`}
-                            >
-                              {exercise.name}
-                            </p>
-
-                            <p className="mt-1 text-xs text-[#8a9992]">
-                              {exercise.sets} sets ×{" "}
-                              {exercise.reps}
-                            </p>
-
-                          </div>
-
-
-                          <span className="text-xs font-bold text-[#397054]">
-                            {completed
-                              ? "Done"
-                              : "Complete"}
-                          </span>
-
-                        </button>
+                        </div>
 
                       );
 
@@ -794,7 +860,7 @@ export default function TodayPage() {
             {workoutLog?.status ===
               "completed" && (
 
-              <div className="py-5 text-center">
+              <div className="animate-[popIn_0.4s_ease-out] py-5 text-center">
 
                 <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#e1eee7] text-[#397054]">
 
@@ -988,8 +1054,72 @@ export default function TodayPage() {
 
       </div>
 
+      <style>{`
+        @keyframes popIn {
+          0% { transform: scale(0.85); opacity: 0; }
+          100% { transform: scale(1); opacity: 1; }
+        }
+      `}</style>
+
     </main>
   );
+}
+
+
+// ============================================================
+// REST TIMER
+// ============================================================
+
+function RestTimer({ seconds }) {
+
+  const [remaining, setRemaining] = useState(seconds);
+  const [running, setRunning] = useState(false);
+
+  useEffect(() => {
+
+    if (!running) return;
+
+    if (remaining <= 0) {
+      setRunning(false);
+      toast.success("Rest complete — back at it!");
+      return;
+    }
+
+    const interval = setInterval(() => {
+      setRemaining((value) => value - 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [running, remaining]);
+
+  const mins = Math.floor(remaining / 60);
+  const secs = remaining % 60;
+
+  return (
+
+    <button
+      type="button"
+      onClick={() => {
+        if (remaining === 0) {
+          setRemaining(seconds);
+          setRunning(true);
+          return;
+        }
+        setRunning((value) => !value);
+      }}
+      className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-[11px] font-bold text-[#397054] ring-1 ring-[#dbe6e0] transition hover:bg-[#edf6f0]"
+    >
+      <Timer size={13} />
+      <span className="min-w-[30px] tabular-nums">
+        {mins}:{String(secs).padStart(2, "0")}
+      </span>
+      {running ? "Pause" : remaining === 0 ? "Restart" : "Rest"}
+    </button>
+
+  );
+
 }
 
 
