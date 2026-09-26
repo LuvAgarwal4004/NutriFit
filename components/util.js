@@ -1,10 +1,12 @@
 
 export const images = [
-  "/white3.jpg",
-  "/bandw2.jpg",
-  "/rakhi5.jpg",
-  "/rakhi2.jpg",
-  "/bandw1.jpg",
+  // "/white3.jpg",
+  // "/bandw2.jpg",
+  // "/rakhi5.jpg",
+  // "/rakhi2.jpg",
+  // "/bandw1.jpg",
+  "banner.jpeg",
+  "",
 ];
 // export const CARDS = [
 //   { id: 1, title: "Mountains", image: "/white3.jpg" },
