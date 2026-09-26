@@ -6,7 +6,6 @@ export const images = [
   // "/rakhi2.jpg",
   // "/bandw1.jpg",
   "banner.jpeg",
-  "",
 ];
 // export const CARDS = [
 //   { id: 1, title: "Mountains", image: "/white3.jpg" },
