@@ -108,9 +108,19 @@ const Page = () => {
   const trendItems = cart
     .filter(item => !item.id?.includes("-"))
     .map(cartItem => {
-      const product = allProducts.find(
+      let product = allProducts.find(
         p => p._id === cartItem.id
       );
+
+      if (!product && cartItem.id === "600000000000000000000000") {
+        product = {
+          _id: "600000000000000000000000",
+          title: "Free Fuel for Fitness (3-4 days of protein snacks + bottle)",
+          price: 0,
+          image: "https://res.cloudinary.com/dxytdtu3y/image/upload/v1727429188/protein_bottle_m7yxyi.png",
+          isDiscount: false
+        };
+      }
 
       return product
         ? { ...product, qty: cartItem.qty }
@@ -286,32 +296,36 @@ const Page = () => {
                       <p className="font-bold dark:text-white">
                         ₹{itemPrice * item.qty}
                       </p>
-                      <div className="flex items-center rounded-lg overflow-hidden">
-
-                        <button
-                          onClick={() => decreaseQty(String(item._id))}
-                          className="px-3 py-1 bg-gray-400"
-                        >
-                          −
-                        </button>
-
-                        <span className="px-4">
-                          {item.qty}
-                        </span>
-
-                        <button
-                          onClick={() => increaseQty(String(item._id))}
-                          className="px-3 py-1 bg-gray-400"
-                        >
-                          +
-                        </button>
-
-                      </div>
+                      {item._id !== "600000000000000000000000" && (
+                        <div className="flex items-center rounded-lg overflow-hidden">
+                          <button
+                            onClick={() => decreaseQty(String(item._id))}
+                            className="px-3 py-1 bg-gray-400"
+                          >
+                            −
+                          </button>
+                          <span className="px-4">
+                            {item.qty}
+                          </span>
+                          <button
+                            onClick={() => increaseQty(String(item._id))}
+                            className="px-3 py-1 bg-gray-400"
+                          >
+                            +
+                          </button>
+                        </div>
+                      )}
+                      {item._id === "600000000000000000000000" && (
+                        <div className="flex items-center rounded-lg overflow-hidden">
+                          <span className="px-4 text-green-600 font-bold text-sm">Free Reward</span>
+                        </div>
+                      )}
                     </div>
 
-                    <button
-                      onClick={() => removeFromCart(String(item._id))}
-                      className="
+                    {item._id !== "600000000000000000000000" && (
+                      <button
+                        onClick={() => removeFromCart(String(item._id))}
+                        className="
     text-red-500
     font-medium
 
@@ -319,9 +333,10 @@ const Page = () => {
 
     lg:self-center
   "
-                    >
-                      Remove
-                    </button>
+                      >
+                        Remove
+                      </button>
+                    )}
 
                   </div>
                 </div>

@@ -108,6 +108,16 @@ export async function POST(req) {
         );
       }
 
+      if (!foundProduct && item.id === "600000000000000000000000") {
+        foundProduct = {
+          _id: "600000000000000000000000",
+          title: "Free Fuel for Fitness (3-4 days of protein snacks + bottle)",
+          price: 0,
+          image: "https://res.cloudinary.com/dxytdtu3y/image/upload/v1727429188/protein_bottle_m7yxyi.png",
+          isDiscount: false
+        };
+      }
+
       if (!foundProduct) {
         throw new Error("Product not found: " + item.id);
       }
