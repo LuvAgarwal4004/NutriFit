@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 import Reveal from "./Reveal";
+import HeroCarousel from "@/components/HeroCarousel";
 
 /* =========================================
    Arrow Icon
@@ -76,17 +77,26 @@ export default async function Home() {
             href="/"
             className="group flex items-center gap-3"
           >
-            <div className="flex h-10 w-10 items-center justify-center 
+            {/* <div className="flex h-10 w-10 items-center justify-center 
             rounded-xl bg-[#173d30] text-lg font-bold text-white shadow-lg 
             shadow-[#173d30]/15 transition-transform duration-300 group-hover:scale-105">
               F
-            </div>
-
-            <div>
+            </div> */}
+            <Link href="/dashboard" className="flex items-center gap-2.5">
+              <img
+                src="/icon.jpeg"
+                alt="NutriFit logo"
+                className="h-10 w-auto md:h-11"
+              />
+              {/* <span className="text-lg font-bold tracking-tight text-[#173d30]">
+                NutriFit
+              </span> */}
+            </Link>
+            {/* <div>
               <div className="text-lg font-bold tracking-tight text-[#173d30]">
                 NutriFit
               </div>
-            </div>
+            </div> */}
           </Link>
 
           {/* Desktop navigation */}
@@ -148,6 +158,7 @@ export default async function Home() {
       {/* =========================================
           HERO
       ========================================= */}
+      <HeroCarousel/>
 
       <section className="relative flex min-h-screen items-center overflow-hidden pt-24">
 
@@ -344,11 +355,10 @@ export default async function Home() {
                       <div className="flex items-center gap-3">
 
                         <div
-                          className={`flex h-7 w-7 items-center justify-center rounded-full ${
-                            index < 2
+                          className={`flex h-7 w-7 items-center justify-center rounded-full ${index < 2
                               ? "bg-[#dceee3] text-[#397054]"
                               : "bg-[#eef2ef] text-[#81928a]"
-                          }`}
+                            }`}
                         >
                           {index < 2 ? <CheckIcon /> : null}
                         </div>
@@ -363,8 +373,8 @@ export default async function Home() {
                         {index === 0
                           ? "4 × 8"
                           : index === 1
-                          ? "3 × 10"
-                          : "3 × 12"}
+                            ? "3 × 10"
+                            : "3 × 12"}
                       </span>
 
                     </div>
