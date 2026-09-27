@@ -118,7 +118,7 @@ export default function MarketPage() {
 
     return (
         <>
-            <div
+            {/* <div
                 className="group relative mx-auto w-[88%] max-w-6xl overflow-hidden 
                 rounded-[2rem] bg-gradient-to-br from-[#4169e1] to-[#1e3a8a]
                  shadow-2xl shadow-blue-500/30 ring-1 ring-black/5 max-h-[220px]
@@ -148,13 +148,14 @@ lg:max-h-[520px]"
                             onLoad={i === 0 ? handleHeroImageLoad : undefined}
                         />
                     </div>
-                ))}
+                ))} */}
 
                 {/* gradient overlay for depth */}
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/10" />
+                {/* <div className="pointer-events-none absolute inset-0
+                bg-gradient-to-t from-black/35 via-transparent to-black/10" /> */}
 
                 {/* arrows */}
-                <button
+                {/* <button
                     type="button"
                     onClick={prev}
                     aria-label="Previous slide"
@@ -175,10 +176,10 @@ lg:max-h-[520px]"
                       group-hover:opacity-100 sm:right-6 sm:h-12 sm:w-12"
                 >
                     ❯
-                </button>
+                </button> */}
 
                 {/* dots */}
-                <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 gap-2">
+                {/* <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 gap-2">
                     {images.map((_, i) => (
                         <button
                             key={i}
@@ -191,8 +192,8 @@ lg:max-h-[520px]"
                                 }`}
                         />
                     ))}
-                </div>
-            </div>
+                </div> */}
+            {/* </div> */}
             <div className=" flex flex-col items-center justify-center"  >
                 <div className="text-3xl
 md:text-5xl font-bold mt-7 m-3">Categories We Offer</div>

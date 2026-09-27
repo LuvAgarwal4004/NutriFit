@@ -41,7 +41,7 @@ export default function HeroCarousel() {
     return (
         <div
             className="group relative mx-auto w-[88%] max-w-6xl
-             overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#4169e1]
+             overflow-hidden bg-gradient-to-br from-[#4169e1]
               to-[#1e3a8a] shadow-2xl shadow-blue-500/30 ring-1 ring-black/5 max-h-[220px]
 sm:max-h-[320px]
 md:max-h-[420px]
@@ -73,7 +73,7 @@ lg:max-h-[520px]"
                 ))}
 
                 {/* gradient overlay for depth */}
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/10" />
+                {/* <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/10" /> */}
 
                 {/* arrows */}
                 {/* <button
