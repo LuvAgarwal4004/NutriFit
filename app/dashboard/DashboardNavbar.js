@@ -23,6 +23,7 @@ import {
   Shield,
   ShoppingBag,
   ShoppingCart,
+  User,
 } from "lucide-react";
 
 function isActive(pathname, href) {
@@ -43,8 +44,8 @@ export default function DashboardNavbar({ user }) {
   const dropdownRef = useRef(null);
 
   const isLoggedIn = status === "authenticated";
-  const isAdminUser = session?.user?.role === "admin";
   const currentUser = session?.user || user || {};
+  const isAdminUser = currentUser?.role === "admin";
   const cartCount = Array.isArray(cart) ? cart.length : 0;
   const hasLiveOrder = Array.isArray(liveOrder)
     ? liveOrder.length > 0
@@ -156,12 +157,12 @@ export default function DashboardNavbar({ user }) {
             <div className="flex items-center gap-1 lg:gap-2">
               <DesktopNavItem
                 href="/dashboard"
-                label="Dashboard"
+                label="Home"
                 active={isActive(pathname, "/dashboard")}
               />
               <DesktopNavItem
                 href="/market"
-                label="Market"
+                label="Products"
                 active={isActive(pathname, "/market")}
               />
 
@@ -182,11 +183,11 @@ export default function DashboardNavbar({ user }) {
                 />
               )}
 
-              <DesktopNavItem
+              {/* <DesktopNavItem
                 href="/contact"
                 label="Contact"
                 active={isActive(pathname, "/contact")}
-              />
+              /> */}
 
               {isAdminUser && (
                 <DesktopNavItem
@@ -233,14 +234,9 @@ export default function DashboardNavbar({ user }) {
                   aria-label="Open profile menu"
                   className="flex rounded-full ring-2 ring-transparent transition hover:ring-[#b9d8c6] focus:outline-none focus-visible:ring-[#397054]"
                 >
-                  <img
-                    src={avatarSrc}
-                    alt="Profile"
-                    width={40}
-                    height={40}
-                    referrerPolicy="no-referrer"
-                    className="h-10 w-10 rounded-full object-cover"
-                  />
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#e3f0e8] text-[#173d30] border border-[#b9d8c6] shadow-sm transition-colors hover:bg-[#d4e6db]">
+                    <User size={22} />
+                  </div>
                 </button>
 
                 {profileOpen && (
@@ -264,6 +260,14 @@ export default function DashboardNavbar({ user }) {
                         label="My Orders"
                         onClick={() => setProfileOpen(false)}
                       />
+                      {!currentUser?.profileCompleted && (
+                        <DropdownLink
+                          href="/onboarding"
+                          icon={<Sparkles size={17} />}
+                          label="Complete Onboarding"
+                          onClick={() => setProfileOpen(false)}
+                        />
+                      )}
                       {isAdminUser && (
                         <DropdownLink
                           href="/admin"
@@ -349,7 +353,7 @@ export default function DashboardNavbar({ user }) {
           <MobileNavItem
             href="/dashboard"
             icon={<LayoutDashboard size={19} />}
-            label="Dashboard"
+            label="Home"
             active={isActive(pathname, "/dashboard")}
             onClick={() => setSidebarOpen(false)}
           />
@@ -391,7 +395,7 @@ export default function DashboardNavbar({ user }) {
           <MobileNavItem
             href="/market"
             icon={<ShoppingBag size={19} />}
-            label="Market"
+            label="Products"
             active={isActive(pathname, "/market")}
             onClick={() => setSidebarOpen(false)}
           />
@@ -416,13 +420,13 @@ export default function DashboardNavbar({ user }) {
             />
           )}
 
-          <MobileNavItem
+          {/* <MobileNavItem
             href="/contact"
             icon={<Phone size={19} />}
             label="Contact"
             active={isActive(pathname, "/contact")}
             onClick={() => setSidebarOpen(false)}
-          />
+          /> */}
 
           {isAdminUser && (
             <MobileNavItem

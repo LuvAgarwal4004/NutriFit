@@ -36,7 +36,7 @@ const dietOptions = [
 export default function OnboardingPage() {
   const router = useRouter();
 
-  const { data: session, status } = useSession();
+  const { data: session, status, update } = useSession();
 
   const [step, setStep] = useState(0);
   const [saving, setSaving] = useState(false);
@@ -280,6 +280,10 @@ useEffect(() => {
       }
 
       toast.success("Fitness profile created!");
+
+      if (update) {
+        await update({ profileCompleted: true });
+      }
 
       router.push("/dashboard");
     } catch (error) {

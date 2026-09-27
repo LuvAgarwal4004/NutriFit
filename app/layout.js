@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import SessionWrapper from "@/components/SessionWrapper";
 import { CartProvider } from "@/context/CartContext";
 import RouteLoader from "@/components/RouteLoader";
+import OnboardingGuard from "@/components/OnboardingGuard";
 import { Toaster } from "react-hot-toast";
 // import { CheckoutProvider } from "@/context/CheckoutContext";
 import NotificationProvider from "@/components/NotificationProvider";
@@ -54,11 +55,11 @@ export default async function RootLayout({ children }) {
 
 
               <DashboardNavbar user={session?.user || null} />
-              <div className="min-h-screen">
-
-                {children}
-
-              </div>
+              <OnboardingGuard>
+                <div className="min-h-screen">
+                  {children}
+                </div>
+              </OnboardingGuard>
               {/* <Footer /> */}
               {/* </CheckoutProvider> */}
             </RouteLoader>

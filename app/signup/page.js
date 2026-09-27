@@ -152,7 +152,7 @@ export default function SignupPage() {
 
       toast.success("Account created successfully!");
 
-      router.push("/onboarding");
+      router.push("/dashboard");
       router.refresh();
     } catch {
       toast.error("Something went wrong.");

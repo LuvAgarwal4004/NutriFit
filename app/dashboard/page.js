@@ -56,12 +56,7 @@ export default async function DashboardPage() {
   const profile =
     await FitnessProfile.findOne({
       userId: session.user.id,
-    }).lean();
-
-
-  if (!profile || !profile.completed) {
-    redirect("/onboarding");
-  }
+    }).lean() || {};
 
 
   // ============================================================

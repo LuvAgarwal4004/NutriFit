@@ -115,7 +115,11 @@ export const authOptions = {
       }
     },
 
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
+      if (trigger === "update" && session?.profileCompleted) {
+        token.profileCompleted = session.profileCompleted;
+      }
+      
       // `user` is only present right after login
       if (user) {
         await connectDb();
@@ -132,6 +136,12 @@ export const authOptions = {
           token.role = isAdminEmail(dbUser.email)
             ? "admin"
             : dbUser.role || "user";
+            
+          const profile = await import("@/models/FitnessProfile").then(m => m.default).catch(() => null);
+          if (profile) {
+            const userProfile = await profile.findOne({ userId: dbUser._id });
+            token.profileCompleted = userProfile?.completed || false;
+          }
         }
       }
 
@@ -143,7 +153,8 @@ export const authOptions = {
       session.user.name = token.name;
       session.user.email = token.email;
       session.user.image = token.image;
-      session.user.role = token.role || "user"; // <-- this was missing
+      session.user.role = token.role || "user"; 
+      session.user.profileCompleted = token.profileCompleted || false;
 
       return session;
     },
