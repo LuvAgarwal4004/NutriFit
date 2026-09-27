@@ -128,9 +128,9 @@ export default async function DashboardPage() {
 
           <div>
 
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#5d9c7b]">
+            {/* <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#5d9c7b]">
               Your dashboard
-            </p>
+            </p> */}
 
             <h1 className="mt-3 text-3xl font-bold tracking-tight text-[#173d30] sm:text-5xl">
               Good to see you, {firstName}.

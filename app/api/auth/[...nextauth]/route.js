@@ -8,10 +8,14 @@ import bcrypt from "bcryptjs";
 import connectDb from "@/db/connectDb";
 import User from "@/models/User";
 
-const ADMIN_EMAIL = "luvag0707@gmail.com" || "gupta.amisha2606@gmail.com" || "guptaniha22@gmail.com";
+const ADMIN_EMAILS = [
+  "luvag0707@gmail.com",
+  "gupta.amisha2606@gmail.com",
+  "guptaniha22@gmail.com"
+];
 
 const isAdminEmail = (email) =>
-  typeof email === "string" && email.toLowerCase() === ADMIN_EMAIL;
+  typeof email === "string" && ADMIN_EMAILS.includes(email.toLowerCase());
 
 export const authOptions = {
   session: {

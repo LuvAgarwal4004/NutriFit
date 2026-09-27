@@ -59,7 +59,7 @@ export default async function RootLayout({ children }) {
                 {children}
 
               </div>
-              <Footer />
+              {/* <Footer /> */}
               {/* </CheckoutProvider> */}
             </RouteLoader>
           </CartProvider>
