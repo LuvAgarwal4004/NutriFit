@@ -57,32 +57,32 @@ export default function DashboardStats() {
   ).length;
 
   return (
-    <section className="mt-10">
-      {/* STAT CARDS */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <section className="mt-6 sm:mt-10">
+      {/* STAT CARDS — 2 per row from the smallest screen up, 4 from lg */}
+      <div className="grid grid-cols-2 gap-2.5 sm:gap-4 lg:grid-cols-4">
         <StatCard
-          icon={<Flame size={18} />}
+          icon={<Flame size={16} />}
           label="Current streak"
           value={`${streak} ${streak === 1 ? "day" : "days"}`}
           accent="#f59e0b"
         />
 
         <StatCard
-          icon={<Activity size={18} />}
+          icon={<Activity size={16} />}
           label="Weekly activity"
           value={`${weeklyActivity}%`}
           accent="#397054"
         />
 
         <StatCard
-          icon={<Trophy size={18} />}
+          icon={<Trophy size={16} />}
           label="Rank"
           value={rank}
           accent="#5d9c7b"
         />
 
         <StatCard
-          icon={<TrendingUp size={18} />}
+          icon={<TrendingUp size={16} />}
           label="Points"
           value={`${xp} XP`}
           accent="#173d30"
@@ -90,16 +90,18 @@ export default function DashboardStats() {
       </div>
 
       {/* CONSISTENCY HEATMAP */}
-      <div className="mt-5 rounded-[2rem] border border-[#e1eae5] bg-white p-6 shadow-sm sm:p-7">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#e1eee7] text-[#397054]">
-              <CalendarDays size={18} />
+      <div className="mt-3.5 rounded-[1.5rem] border border-[#e1eae5] bg-white p-4 shadow-sm sm:mt-5 sm:rounded-[2rem] sm:p-7">
+        <div className="flex flex-wrap items-center justify-between gap-3 sm:gap-4">
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-[#e1eee7] text-[#397054] sm:h-10 sm:w-10">
+              <CalendarDays size={16} />
             </div>
 
             <div>
-              <h3 className="font-bold text-[#24483a]">Your consistency</h3>
-              <p className="text-xs text-[#8a9992]">
+              <h3 className="text-sm font-bold text-[#24483a] sm:text-base">
+                Your consistency
+              </h3>
+              <p className="text-[11px] text-[#8a9992] sm:text-xs">
                 {activeDays > 0
                   ? `Active ${activeDays} of the last ${dailyActivity.length} days`
                   : "Last 30 days"}
@@ -107,12 +109,12 @@ export default function DashboardStats() {
             </div>
           </div>
 
-          <div className="flex items-center gap-1.5 text-[10px] font-semibold text-[#a2b0aa]">
+          <div className="flex items-center gap-1 text-[9px] font-semibold text-[#a2b0aa] sm:gap-1.5 sm:text-[10px]">
             <span>Less</span>
             {LEVEL_COLORS.map((color, index) => (
               <span
                 key={index}
-                className="h-3 w-3 rounded-[4px]"
+                className="h-2.5 w-2.5 rounded-[4px] sm:h-3 sm:w-3"
                 style={{ backgroundColor: color }}
               />
             ))}
@@ -121,7 +123,7 @@ export default function DashboardStats() {
         </div>
 
         {weeks.length === 0 ? (
-          <div className="mt-6 rounded-2xl bg-[#f7faf8] p-8 text-center">
+          <div className="mt-5 rounded-2xl bg-[#f7faf8] p-6 text-center sm:mt-6 sm:p-8">
             <p className="text-sm text-[#71817a]">
               Your consistency graph will show up here once you log a
               workout or meal.
@@ -129,12 +131,12 @@ export default function DashboardStats() {
           </div>
         ) : (
           <>
-            <div className="mt-6 flex gap-3 overflow-x-auto pb-2">
-              <div className="flex shrink-0 flex-col justify-between py-px text-[9px] font-semibold text-[#a2b0aa]">
+            <div className="mt-5 flex gap-2.5 overflow-x-auto pb-2 sm:mt-6 sm:gap-3">
+              <div className="flex shrink-0 flex-col justify-between py-px text-[8px] font-semibold text-[#a2b0aa] sm:text-[9px]">
                 {DAY_LABELS.map((label, index) => (
                   <span
                     key={index}
-                    className="flex h-3.5 items-center leading-none"
+                    className="flex h-3 items-center leading-none sm:h-3.5"
                   >
                     {index % 2 === 1 ? label : ""}
                   </span>
@@ -149,7 +151,7 @@ export default function DashboardStats() {
                         return (
                           <span
                             key={dayIndex}
-                            className="h-3.5 w-3.5 rounded-[4px]"
+                            className="h-3 w-3 rounded-[3px] sm:h-3.5 sm:w-3.5 sm:rounded-[4px]"
                           />
                         );
                       }
@@ -168,7 +170,7 @@ export default function DashboardStats() {
                           onClick={() =>
                             setSelectedDay(isSelected ? null : day)
                           }
-                          className={`h-3.5 w-3.5 rounded-[4px] transition-transform duration-150 hover:scale-125 ${
+                          className={`h-3 w-3 rounded-[3px] transition-transform duration-150 hover:scale-125 sm:h-3.5 sm:w-3.5 sm:rounded-[4px] ${
                             isSelected
                               ? "ring-2 ring-[#173d30] ring-offset-1"
                               : ""
@@ -183,7 +185,7 @@ export default function DashboardStats() {
               </div>
             </div>
 
-            <div className="mt-4 min-h-[20px] text-xs font-semibold text-[#397054]">
+            <div className="mt-3.5 min-h-[18px] text-[11px] font-semibold text-[#397054] sm:mt-4 sm:min-h-[20px] sm:text-xs">
               {selectedDay ? (
                 <span>
                   {formatHeatmapDate(selectedDay.date)} — Workout{" "}
@@ -258,19 +260,21 @@ function formatHeatmapDate(dateString) {
 
 function StatCard({ icon, label, value, accent }) {
   return (
-    <div className="group rounded-3xl border border-[#e1eae5] bg-white p-5 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+    <div className="group min-w-0 rounded-2xl border border-[#e1eae5] bg-white p-3.5 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg sm:rounded-3xl sm:p-5">
       <div
-        className="flex h-10 w-10 items-center justify-center rounded-2xl transition-transform duration-300 group-hover:scale-110"
+        className="flex h-8 w-8 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110 sm:h-10 sm:w-10 sm:rounded-2xl"
         style={{ backgroundColor: `${accent}1a`, color: accent }}
       >
         {icon}
       </div>
 
-      <p className="mt-4 text-[11px] font-semibold uppercase tracking-wider text-[#8a9992]">
+      <p className="mt-2.5 truncate text-[10px] font-semibold uppercase tracking-wider text-[#8a9992] sm:mt-4 sm:text-[11px]">
         {label}
       </p>
 
-      <p className="mt-1 text-xl font-bold text-[#173d30]">{value}</p>
+      <p className="mt-0.5 truncate text-base font-bold text-[#173d30] sm:mt-1 sm:text-xl">
+        {value}
+      </p>
     </div>
   );
 }

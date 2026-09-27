@@ -106,43 +106,39 @@ export default async function DashboardPage() {
   // ============================================================
 
   return (
-    <main className="min-h-screen bg-[#f7faf8] text-[#17231e]">
+    <main className="min-h-screen overflow-x-hidden bg-[#f7faf8] text-[#17231e]">
 
-      <div className="pt-8 sm:pt-10">
+      <div className="pt-5 sm:pt-10">
         <HeroCarousel />
       </div>
 
-      <div className="mx-auto max-w-7xl px-5 py-10 sm:px-8 sm:py-14">
+      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-8 sm:py-14">
 
 
         {/* =====================================================
             GREETING + PLAN SHORTCUTS
         ===================================================== */}
 
-        <section className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <section className="flex flex-col gap-4 sm:gap-6 lg:flex-row lg:items-end lg:justify-between">
 
           <div>
 
-            {/* <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#5d9c7b]">
-              Your dashboard
-            </p> */}
-
-            <h1 className="mt-3 text-3xl font-bold tracking-tight text-[#173d30] sm:text-5xl">
+            <h1 className="text-2xl font-bold tracking-tight text-[#173d30] sm:text-3xl lg:text-5xl">
               Good to see you, {firstName}.
             </h1>
 
-            <p className="mt-4 max-w-2xl leading-7 text-[#71817a]">
+            <p className="mt-2.5 max-w-2xl text-sm leading-6 text-[#71817a] sm:mt-4 sm:text-base sm:leading-7">
               Your fitness journey starts here. Train, fuel your body,
               track your progress and keep building momentum.
             </p>
 
           </div>
 
-          <div className="flex flex-shrink-0 flex-wrap gap-3">
+          <div className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:gap-3">
 
             <Link
               href="/dashboard/workout"
-              className="group inline-flex items-center gap-2.5 rounded-full border border-[#d8e5de] bg-white px-5 py-3 text-sm font-bold text-[#245543] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[#173d30] hover:shadow-md"
+              className="group inline-flex w-full items-center justify-center gap-2.5 rounded-full border border-[#d8e5de] bg-white px-5 py-3 text-sm font-bold text-[#245543] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[#173d30] hover:shadow-md sm:w-auto"
             >
               <Dumbbell size={16} />
               View Workout Plan
@@ -154,7 +150,7 @@ export default async function DashboardPage() {
 
             <Link
               href="/dashboard/nutrition"
-              className="group inline-flex items-center gap-2.5 rounded-full bg-[#173d30] px-5 py-3 text-sm font-bold text-white shadow-lg shadow-[#173d30]/15 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#245543]"
+              className="group inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-[#173d30] px-5 py-3 text-sm font-bold text-white shadow-lg shadow-[#173d30]/15 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#245543] sm:w-auto"
             >
               <Utensils size={16} />
               View Nutrition Plan
@@ -180,20 +176,20 @@ export default async function DashboardPage() {
             TODAY — HERO CARD
         ===================================================== */}
 
-        <section className="mt-6">
+        <section className="mt-5 sm:mt-6">
 
           <Link
             href="/dashboard/today"
-            className="group relative block overflow-hidden rounded-[2.5rem] border border-[#e1eae5] bg-white p-8 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl sm:p-10"
+            className="group relative block overflow-hidden rounded-[1.75rem] border border-[#e1eae5] bg-white p-5 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl sm:rounded-[2.5rem] sm:p-8 lg:p-10"
           >
 
             <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#dceee3] opacity-60 blur-3xl transition-transform duration-700 group-hover:scale-110" />
 
-            <div className="relative flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+            <div className="relative flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
 
               <div className="max-w-xl">
 
-                <div className="inline-flex items-center gap-2 rounded-full bg-[#edf6f0] px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#397054]">
+                <div className="inline-flex items-center gap-2 rounded-full bg-[#edf6f0] px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-[#397054] sm:px-4 sm:text-xs">
                   <span
                     className={`h-2 w-2 rounded-full ${
                       stats.workoutCompletedToday
@@ -206,19 +202,19 @@ export default async function DashboardPage() {
                     : "Ready for you"}
                 </div>
 
-                <h2 className="mt-5 text-2xl font-bold text-[#173d30] sm:text-3xl">
+                <h2 className="mt-4 text-xl font-bold text-[#173d30] sm:mt-5 sm:text-2xl lg:text-3xl">
                   {stats.workoutCompletedToday
                     ? "Nice work — today's workout is done."
                     : "Today's workout is ready."}
                 </h2>
 
-                <p className="mt-3 leading-7 text-[#71817a]">
+                <p className="mt-2.5 text-sm leading-6 text-[#71817a] sm:mt-3 sm:text-base sm:leading-7">
                   {stats.workoutCompletedToday
                     ? "Your progress has been logged. Come back tomorrow to keep the streak alive."
                     : "Jump in and complete today's exercises, one step at a time."}
                 </p>
 
-                <span className="mt-6 inline-flex items-center gap-3 rounded-full bg-[#173d30] px-6 py-3.5 text-sm font-bold text-white transition-all duration-300 group-hover:gap-4 group-hover:bg-[#245543]">
+                <span className="mt-5 inline-flex items-center gap-3 rounded-full bg-[#173d30] px-5 py-3 text-sm font-bold text-white transition-all duration-300 group-hover:gap-4 group-hover:bg-[#245543] sm:mt-6 sm:px-6 sm:py-3.5">
                   {stats.workoutCompletedToday ? (
                     <>
                       View today's activity
@@ -234,7 +230,7 @@ export default async function DashboardPage() {
 
               </div>
 
-              <div className="flex shrink-0 items-center justify-center">
+              <div className="flex shrink-0 items-center justify-center self-center">
                 <ProgressRing
                   percent={
                     stats.workoutCompletedToday ? 100 : stats.weeklyActivity
@@ -259,27 +255,27 @@ export default async function DashboardPage() {
             AI COACH FEATURE
         ===================================================== */}
 
-        <section className="mt-6 overflow-hidden rounded-[2rem] bg-[#173d30] text-white">
+        <section className="mt-5 overflow-hidden rounded-[1.75rem] bg-[#173d30] text-white sm:mt-6 sm:rounded-[2rem]">
 
-          <div className="grid items-center gap-10 p-7 sm:p-10 lg:grid-cols-2 lg:p-12">
+          <div className="grid items-center gap-6 p-5 sm:gap-10 sm:p-8 lg:grid-cols-2 lg:p-12">
 
             <div>
 
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10">
-                <Sparkles size={23} />
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/10 sm:h-12 sm:w-12">
+                <Sparkles size={21} />
               </div>
 
-              <p className="mt-7 text-sm font-bold uppercase tracking-[0.18em] text-[#a8cbb7]">
+              <p className="mt-5 text-xs font-bold uppercase tracking-[0.18em] text-[#a8cbb7] sm:mt-7 sm:text-sm">
                 NutriFit AI
               </p>
 
-              <h2 className="mt-3 text-3xl font-bold leading-tight sm:text-4xl">
+              <h2 className="mt-2.5 text-2xl font-bold leading-tight sm:mt-3 sm:text-3xl lg:text-4xl">
                 Your fitness journey,
                 <br />
                 powered by AI.
               </h2>
 
-              <p className="mt-5 max-w-xl leading-7 text-[#c1d6ca]">
+              <p className="mt-4 text-sm leading-6 text-[#c1d6ca] sm:mt-5 sm:max-w-xl sm:leading-7">
                 Tell NutriFit what you're trying to achieve and we'll use
                 the information you provide to help create a more
                 personalized fitness experience.
@@ -287,7 +283,7 @@ export default async function DashboardPage() {
 
               <Link
                 href="/dashboard/coach"
-                className="mt-7 inline-flex items-center gap-3 rounded-full bg-white px-6 py-3.5 text-sm font-bold text-[#173d30] transition hover:-translate-y-0.5 hover:bg-[#edf6f0]"
+                className="mt-5 inline-flex items-center gap-3 rounded-full bg-white px-5 py-3 text-sm font-bold text-[#173d30] transition hover:-translate-y-0.5 hover:bg-[#edf6f0] sm:mt-7 sm:px-6 sm:py-3.5"
               >
                 Talk to my AI coach
                 <ChevronRight size={17} />
@@ -296,13 +292,13 @@ export default async function DashboardPage() {
             </div>
 
 
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur">
+            <div className="rounded-3xl border border-white/10 bg-white/5 p-4 backdrop-blur sm:p-5">
 
               <p className="text-xs font-bold uppercase tracking-wider text-[#9fc2ad]">
                 Your AI workspace
               </p>
 
-              <div className="mt-5 space-y-3">
+              <div className="mt-4 space-y-2.5 sm:mt-5 sm:space-y-3">
 
                 {[
                   [
@@ -331,14 +327,14 @@ export default async function DashboardPage() {
 
                   <div
                     key={label}
-                    className="flex items-center justify-between rounded-2xl bg-white/5 px-4 py-4"
+                    className="flex items-center justify-between gap-3 rounded-2xl bg-white/5 px-3.5 py-3.5 sm:px-4 sm:py-4"
                   >
 
-                    <span className="text-sm text-[#c7d9cf]">
+                    <span className="text-xs text-[#c7d9cf] sm:text-sm">
                       {label}
                     </span>
 
-                    <span className="text-sm font-semibold text-[#a8cbb7]">
+                    <span className="text-right text-xs font-semibold text-[#a8cbb7] sm:text-sm">
                       {value}
                     </span>
 
@@ -359,7 +355,7 @@ export default async function DashboardPage() {
             QUICK LINKS
         ===================================================== */}
 
-        <section className="mt-6 grid gap-4 sm:grid-cols-2">
+        <section className="mt-5 grid gap-3 sm:mt-6 sm:grid-cols-2 sm:gap-4">
 
           <QuickLinkCard
             href="/dashboard/insights"
@@ -407,7 +403,7 @@ function ProgressRing({ percent, label, sublabel }) {
 
   return (
 
-    <div className="relative flex h-32 w-32 shrink-0 items-center justify-center">
+    <div className="relative flex h-24 w-24 shrink-0 items-center justify-center sm:h-32 sm:w-32">
 
       <svg className="h-full w-full -rotate-90" viewBox="0 0 120 120">
 
@@ -437,11 +433,11 @@ function ProgressRing({ percent, label, sublabel }) {
 
       <div className="absolute flex flex-col items-center">
 
-        <span className="text-xl font-bold text-[#173d30]">
+        <span className="text-base font-bold text-[#173d30] sm:text-xl">
           {label}
         </span>
 
-        <span className="text-[10px] font-semibold uppercase tracking-wide text-[#8a9992]">
+        <span className="text-[9px] font-semibold uppercase tracking-wide text-[#8a9992] sm:text-[10px]">
           {sublabel}
         </span>
 
@@ -465,21 +461,21 @@ function QuickLinkCard({ href, icon, title, description }) {
 
     <Link
       href={href}
-      className="group flex items-center gap-4 rounded-3xl border border-[#e1eae5] bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[#c5ddd0] hover:shadow-md"
+      className="group flex items-center gap-3.5 rounded-3xl border border-[#e1eae5] bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[#c5ddd0] hover:shadow-md sm:gap-4 sm:p-5"
     >
 
-      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#e1eee7] text-[#397054] transition-transform duration-300 group-hover:scale-110">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#e1eee7] text-[#397054] transition-transform duration-300 group-hover:scale-110 sm:h-11 sm:w-11">
         {icon}
       </div>
 
-      <div className="flex-1">
-        <p className="font-bold text-[#24483a]">{title}</p>
-        <p className="mt-0.5 text-xs text-[#82918a]">{description}</p>
+      <div className="min-w-0 flex-1">
+        <p className="truncate font-bold text-[#24483a]">{title}</p>
+        <p className="mt-0.5 truncate text-xs text-[#82918a]">{description}</p>
       </div>
 
       <ChevronRight
         size={16}
-        className="text-[#b6c4bd] transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[#397054]"
+        className="shrink-0 text-[#b6c4bd] transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[#397054]"
       />
 
     </Link>
@@ -942,9 +938,24 @@ function calculateRank(xp) {
 
 function getDateString(date) {
 
-  return date
-    .toISOString()
-    .split("T")[0];
+  // Local date, not UTC — must match getLocalDate() in
+  // app/dashboard/today/page.js, since that's the date
+  // workout/nutrition logs are actually saved under.
+
+  const year =
+    date.getFullYear();
+
+  const month =
+    String(
+      date.getMonth() + 1
+    ).padStart(2, "0");
+
+  const day =
+    String(
+      date.getDate()
+    ).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
 
 }
 

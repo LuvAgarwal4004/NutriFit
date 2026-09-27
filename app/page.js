@@ -60,43 +60,26 @@ export default async function Home() {
     redirect("/dashboard");
   }
   return (
-    <main className="min-h-screen overflow-hidden bg-[#f7faf8] text-[#17231e]">
+    <main className="min-h-screen overflow-x-hidden bg-[#f7faf8] text-[#17231e]">
 
       {/* =========================================
           NAVBAR
       ========================================= */}
 
-      <header className="fixed left-0 right-0 top-0 
-      z-50 border-b border-[#dce8e1]/70 bg-[#f7faf8]/85 backdrop-blur-xl">
-        <div className="mx-auto flex h-20 max-w-7xl
-         items-center justify-between px-5 sm:px-8">
+      <header className="fixed left-0 right-0 top-0 z-50 h-16 border-b border-[#dce8e1]/70 bg-[#f7faf8]/85 backdrop-blur-xl sm:h-20">
+        <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-4 sm:px-8">
 
-          {/* Logo */}
+          {/* Logo — single link, no nested anchors */}
 
           <Link
             href="/"
-            className="group flex items-center gap-3"
+            className="group flex items-center gap-2.5"
           >
-            {/* <div className="flex h-10 w-10 items-center justify-center 
-            rounded-xl bg-[#173d30] text-lg font-bold text-white shadow-lg 
-            shadow-[#173d30]/15 transition-transform duration-300 group-hover:scale-105">
-              F
-            </div> */}
-            <Link href="/dashboard" className="flex items-center gap-2.5">
-              <img
-                src="/icon.jpeg"
-                alt="NutriFit logo"
-                className="h-10 w-auto md:h-11"
-              />
-              {/* <span className="text-lg font-bold tracking-tight text-[#173d30]">
-                NutriFit
-              </span> */}
-            </Link>
-            {/* <div>
-              <div className="text-lg font-bold tracking-tight text-[#173d30]">
-                NutriFit
-              </div>
-            </div> */}
+            <img
+              src="/icon.jpeg"
+              alt="NutriFit logo"
+              className="h-9 w-auto sm:h-10 md:h-11"
+            />
           </Link>
 
           {/* Desktop navigation */}
@@ -135,18 +118,18 @@ export default async function Home() {
 
           {/* Authentication */}
 
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-3">
 
             <Link
               href="/login"
-              className="hidden rounded-full px-4 py-2.5 text-sm font-semibold text-[#315047] transition-colors hover:bg-[#eaf2ed] sm:block"
+              className="rounded-full px-3 py-2 text-xs font-semibold text-[#315047] transition-colors hover:bg-[#eaf2ed] sm:px-4 sm:py-2.5 sm:text-sm"
             >
               Log in
             </Link>
 
             <Link
               href="/signup"
-              className="rounded-full bg-[#173d30] px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#173d30]/15 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#245543] hover:shadow-xl sm:px-5"
+              className="rounded-full bg-[#173d30] px-3.5 py-2 text-xs font-semibold text-white shadow-lg shadow-[#173d30]/15 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#245543] hover:shadow-xl sm:px-5 sm:py-2.5 sm:text-sm"
             >
               Get Started
             </Link>
@@ -156,11 +139,21 @@ export default async function Home() {
       </header>
 
       {/* =========================================
+          HERO CAROUSEL
+          Padding-top clears the fixed header above —
+          without it the carousel's top edge renders
+          underneath the header and gets visually cut off.
+      ========================================= */}
+
+      <div className="pt-16 sm:pt-20">
+        <HeroCarousel />
+      </div>
+
+      {/* =========================================
           HERO
       ========================================= */}
-      <HeroCarousel/>
 
-      <section className="relative flex min-h-screen items-center overflow-hidden pt-24">
+      <section className="relative flex flex-col items-center overflow-hidden pt-8 pb-12 sm:pt-12 sm:pb-16 lg:min-h-screen lg:justify-center lg:pt-16 lg:pb-0">
 
         {/* Background decoration */}
 
@@ -168,13 +161,13 @@ export default async function Home() {
 
         <div className="pointer-events-none absolute -bottom-40 -left-40 h-[500px] w-[500px] rounded-full bg-[#e5eee8] blur-3xl" />
 
-        <div className="relative mx-auto grid w-full max-w-7xl items-center gap-16 px-5 py-20 sm:px-8 lg:grid-cols-2 lg:gap-12">
+        <div className="relative mx-auto grid w-full max-w-7xl items-center gap-10 px-4 sm:px-8 lg:grid-cols-2 lg:gap-12">
 
           {/* Hero text */}
 
           <div className="max-w-2xl">
 
-            <div className="mb-7 inline-flex animate-[fadeIn_0.8s_ease-out] items-center gap-2 rounded-full border border-[#cfe0d7] bg-white/70 px-4 py-2 text-xs font-semibold uppercase tracking-[0.15em] text-[#467060] shadow-sm backdrop-blur">
+            <div className="mb-5 inline-flex animate-[fadeIn_0.8s_ease-out] items-center gap-2 rounded-full border border-[#cfe0d7] bg-white/70 px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-[#467060] shadow-sm backdrop-blur sm:mb-7 sm:px-4 sm:py-2 sm:text-xs">
 
               <span className="h-2 w-2 animate-pulse rounded-full bg-[#63a77e]" />
 
@@ -182,7 +175,7 @@ export default async function Home() {
 
             </div>
 
-            <h1 className="text-5xl font-bold leading-[1.05] tracking-[-0.045em] text-[#173d30] sm:text-6xl lg:text-7xl">
+            <h1 className="text-4xl font-bold leading-[1.08] tracking-[-0.03em] text-[#173d30] sm:text-5xl sm:leading-[1.05] sm:tracking-[-0.045em] lg:text-7xl">
 
               One AI coach.
 
@@ -194,17 +187,17 @@ export default async function Home() {
 
             </h1>
 
-            <p className="mt-7 max-w-xl text-base leading-8 text-[#63766e] sm:text-lg">
+            <p className="mt-5 max-w-xl text-sm leading-7 text-[#63766e] sm:mt-7 sm:text-base sm:leading-8 lg:text-lg">
               NutriFit builds your workout and nutrition plans around your
               goals, tracks what you actually do, and adjusts as you go —
               plus a marketplace for the gear and fuel to back it up.
             </p>
 
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-6 flex flex-col gap-3 sm:mt-9 sm:flex-row">
 
               <Link
                 href="/signup"
-                className="group inline-flex items-center justify-center gap-3 rounded-full bg-[#173d30] px-7 py-4 text-sm font-bold text-white shadow-xl shadow-[#173d30]/20 transition-all duration-300 hover:-translate-y-1 hover:bg-[#245543]"
+                className="group inline-flex items-center justify-center gap-3 rounded-full bg-[#173d30] px-6 py-3.5 text-sm font-bold text-white shadow-xl shadow-[#173d30]/20 transition-all duration-300 hover:-translate-y-1 hover:bg-[#245543] sm:px-7 sm:py-4"
               >
                 Build My Plan
 
@@ -215,7 +208,7 @@ export default async function Home() {
 
               <a
                 href="#features"
-                className="inline-flex items-center justify-center rounded-full border border-[#cfddd6] bg-white/70 px-7 py-4 text-sm font-bold text-[#315047] backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:bg-white"
+                className="inline-flex items-center justify-center rounded-full border border-[#cfddd6] bg-white/70 px-6 py-3.5 text-sm font-bold text-[#315047] backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:bg-white sm:px-7 sm:py-4"
               >
                 Explore NutriFit
               </a>
@@ -224,10 +217,10 @@ export default async function Home() {
 
             {/* Animated value-prop banner */}
 
-            <div className="mt-8 overflow-hidden rounded-full border border-[#cfe0d7] bg-white/60 py-2.5 backdrop-blur">
-              <div className="marquee-track flex w-max gap-10 whitespace-nowrap text-xs font-semibold text-[#4d765f]">
+            <div className="mt-6 overflow-hidden rounded-full border border-[#cfe0d7] bg-white/60 py-2 backdrop-blur sm:mt-8 sm:py-2.5">
+              <div className="marquee-track flex w-max gap-6 whitespace-nowrap text-[11px] font-semibold text-[#4d765f] sm:gap-10 sm:text-xs">
                 {[0, 1].map((loop) => (
-                  <span key={loop} className="flex gap-10">
+                  <span key={loop} className="flex gap-6 sm:gap-10">
                     {[
                       "AI workout plans",
                       "Smart nutrition guidance",
@@ -244,7 +237,7 @@ export default async function Home() {
               </div>
             </div>
 
-            <div className="mt-7 flex flex-wrap gap-x-6 gap-y-3 text-sm text-[#6c7e76]">
+            <div className="mt-5 flex flex-wrap gap-x-4 gap-y-2 text-xs text-[#6c7e76] sm:mt-7 sm:gap-x-6 sm:gap-y-3 sm:text-sm">
 
               <div className="flex items-center gap-2">
                 <CheckIcon />
@@ -269,23 +262,23 @@ export default async function Home() {
 
           <div className="relative mx-auto w-full max-w-lg">
 
-            <div className="relative z-10 rounded-[2rem] border border-white/80 bg-white/80 p-5 shadow-2xl shadow-[#294f40]/10 backdrop-blur-xl sm:p-7">
+            <div className="relative z-10 rounded-[1.75rem] border border-white/80 bg-white/80 p-4 shadow-2xl shadow-[#294f40]/10 backdrop-blur-xl sm:rounded-[2rem] sm:p-7">
 
               <div className="flex items-center justify-between">
 
                 <div>
 
-                  <p className="text-xs font-medium uppercase tracking-wider text-[#82948d]">
+                  <p className="text-[11px] font-medium uppercase tracking-wider text-[#82948d] sm:text-xs">
                     Today's progress
                   </p>
 
-                  <h3 className="mt-1 text-xl font-bold text-[#173d30]">
+                  <h3 className="mt-1 text-lg font-bold text-[#173d30] sm:text-xl">
                     Keep the streak alive 🔥
                   </h3>
 
                 </div>
 
-                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#edf6f0] text-lg">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#edf6f0] text-base sm:h-11 sm:w-11 sm:text-lg">
                   12
                 </div>
 
@@ -293,7 +286,7 @@ export default async function Home() {
 
               {/* Progress */}
 
-              <div className="mt-7">
+              <div className="mt-5 sm:mt-7">
 
                 <div className="mb-2 flex justify-between text-xs font-semibold">
 
@@ -317,29 +310,29 @@ export default async function Home() {
 
               {/* Workout */}
 
-              <div className="mt-7 rounded-2xl bg-[#f4f8f5] p-5">
+              <div className="mt-5 rounded-2xl bg-[#f4f8f5] p-4 sm:mt-7 sm:p-5">
 
                 <div className="flex items-center justify-between">
 
                   <div>
 
-                    <p className="text-xs text-[#82948d]">
+                    <p className="text-[11px] text-[#82948d] sm:text-xs">
                       Today's workout
                     </p>
 
-                    <h4 className="mt-1 font-bold text-[#24483a]">
+                    <h4 className="mt-1 text-sm font-bold text-[#24483a] sm:text-base">
                       Chest & Triceps
                     </h4>
 
                   </div>
 
-                  <span className="rounded-full bg-[#dceee3] px-3 py-1 text-xs font-bold text-[#397054]">
+                  <span className="rounded-full bg-[#dceee3] px-2.5 py-1 text-[11px] font-bold text-[#397054] sm:px-3 sm:text-xs">
                     45 min
                   </span>
 
                 </div>
 
-                <div className="mt-5 space-y-3">
+                <div className="mt-4 space-y-2.5 sm:mt-5 sm:space-y-3">
 
                   {[
                     "Bench Press",
@@ -349,32 +342,33 @@ export default async function Home() {
 
                     <div
                       key={exercise}
-                      className="flex items-center justify-between rounded-xl bg-white px-4 py-3"
+                      className="flex items-center justify-between rounded-xl bg-white px-3 py-2.5 sm:px-4 sm:py-3"
                     >
 
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2.5 sm:gap-3">
 
                         <div
-                          className={`flex h-7 w-7 items-center justify-center rounded-full ${index < 2
+                          className={`flex h-6 w-6 items-center justify-center rounded-full sm:h-7 sm:w-7 ${
+                            index < 2
                               ? "bg-[#dceee3] text-[#397054]"
                               : "bg-[#eef2ef] text-[#81928a]"
-                            }`}
+                          }`}
                         >
                           {index < 2 ? <CheckIcon /> : null}
                         </div>
 
-                        <span className="text-sm font-medium text-[#52655d]">
+                        <span className="text-xs font-medium text-[#52655d] sm:text-sm">
                           {exercise}
                         </span>
 
                       </div>
 
-                      <span className="text-xs text-[#94a39d]">
+                      <span className="text-[11px] text-[#94a39d] sm:text-xs">
                         {index === 0
                           ? "4 × 8"
                           : index === 1
-                            ? "3 × 10"
-                            : "3 × 12"}
+                          ? "3 × 10"
+                          : "3 × 12"}
                       </span>
 
                     </div>
@@ -387,21 +381,21 @@ export default async function Home() {
 
               {/* AI recommendation */}
 
-              <div className="mt-4 rounded-2xl bg-[#173d30] p-5 text-white">
+              <div className="mt-3.5 rounded-2xl bg-[#173d30] p-4 text-white sm:mt-4 sm:p-5">
 
                 <div className="flex items-start gap-3">
 
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/10">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-white/10 sm:h-9 sm:w-9">
                     ✦
                   </div>
 
                   <div>
 
-                    <p className="text-xs font-semibold uppercase tracking-wider text-[#a8cbb7]">
+                    <p className="text-[11px] font-semibold uppercase tracking-wider text-[#a8cbb7] sm:text-xs">
                       NutriFit AI
                     </p>
 
-                    <p className="mt-1 text-sm leading-6 text-[#e5f0ea]">
+                    <p className="mt-1 text-xs leading-6 text-[#e5f0ea] sm:text-sm">
                       You're maintaining a strong streak. Keep today's
                       workout consistent and recover well.
                     </p>
@@ -452,18 +446,18 @@ export default async function Home() {
 
       <section
         id="features"
-        className="bg-white py-24 sm:py-28"
+        className="bg-white py-14 sm:py-24 sm:py-28"
       >
 
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-8">
 
           <Reveal className="mx-auto max-w-3xl text-center">
 
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#5d9c7b]">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#5d9c7b] sm:text-sm">
               More than a fitness store
             </p>
 
-            <h2 className="mt-4 text-3xl font-bold tracking-tight text-[#173d30] sm:text-5xl">
+            <h2 className="mt-3 text-2xl font-bold tracking-tight text-[#173d30] sm:mt-4 sm:text-3xl lg:text-5xl">
 
               Everything you need to
 
@@ -473,14 +467,14 @@ export default async function Home() {
 
             </h2>
 
-            <p className="mt-5 text-base leading-7 text-[#687a72] sm:text-lg">
+            <p className="mt-4 text-sm leading-6 text-[#687a72] sm:mt-5 sm:text-base sm:leading-7 lg:text-lg">
               NutriFit connects the different parts of your fitness journey
               instead of making you jump between different platforms.
             </p>
 
           </Reveal>
 
-          <div className="mt-16 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-16 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
 
             {[
               {
@@ -514,11 +508,11 @@ export default async function Home() {
                 delay={index * 100}
               >
 
-                <div className="group h-full rounded-3xl border border-[#e1eae5] bg-[#f8fbf9] p-7 transition-all duration-500 hover:-translate-y-2 hover:border-[#c5ddd0] hover:bg-white hover:shadow-xl hover:shadow-[#254d3d]/8">
+                <div className="group h-full rounded-3xl border border-[#e1eae5] bg-[#f8fbf9] p-5 transition-all duration-500 hover:-translate-y-2 hover:border-[#c5ddd0] hover:bg-white hover:shadow-xl hover:shadow-[#254d3d]/8 sm:p-7">
 
                   <div className="flex items-center justify-between">
 
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#e1eee7] text-xl text-[#397054] transition-transform duration-500 group-hover:scale-110">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#e1eee7] text-lg text-[#397054] transition-transform duration-500 group-hover:scale-110 sm:h-12 sm:w-12 sm:text-xl">
                       {feature.icon}
                     </div>
 
@@ -528,11 +522,11 @@ export default async function Home() {
 
                   </div>
 
-                  <h3 className="mt-7 text-xl font-bold text-[#24483a]">
+                  <h3 className="mt-5 text-lg font-bold text-[#24483a] sm:mt-7 sm:text-xl">
                     {feature.title}
                   </h3>
 
-                  <p className="mt-3 text-sm leading-7 text-[#71817a]">
+                  <p className="mt-2.5 text-sm leading-6 text-[#71817a] sm:mt-3 sm:leading-7">
                     {feature.text}
                   </p>
 
@@ -554,20 +548,20 @@ export default async function Home() {
 
       <section
         id="ai"
-        className="relative overflow-hidden bg-[#eef6f1] py-24 sm:py-32"
+        className="relative overflow-hidden bg-[#eef6f1] py-14 sm:py-24 sm:py-32"
       >
 
         <div className="absolute right-0 top-0 h-80 w-80 rounded-full bg-[#cce5d6]/50 blur-3xl" />
 
-        <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-2">
+        <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-8 lg:grid-cols-2 lg:gap-14">
 
           <Reveal>
 
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#5d9c7b]">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#5d9c7b] sm:text-sm">
               Your personal AI Coach
             </p>
 
-            <h2 className="mt-4 text-3xl font-bold leading-tight tracking-tight text-[#173d30] sm:text-5xl">
+            <h2 className="mt-3 text-2xl font-bold leading-tight tracking-tight text-[#173d30] sm:mt-4 sm:text-3xl lg:text-5xl">
 
               Stop guessing.
 
@@ -579,7 +573,7 @@ export default async function Home() {
 
             </h2>
 
-            <p className="mt-6 max-w-xl leading-8 text-[#61746b]">
+            <p className="mt-4 leading-7 text-[#61746b] sm:mt-6 sm:max-w-xl sm:leading-8">
               Tell NutriFit about your goal, experience, schedule, equipment
               and preferences. Your AI Coach can then generate a personalized
               routine designed around the information you provide.
@@ -587,13 +581,13 @@ export default async function Home() {
 
             <Link
               href="/signup"
-              className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#173d30] px-6 py-3.5 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-1 hover:bg-[#245543]"
+              className="mt-6 inline-flex items-center gap-3 rounded-full bg-[#173d30] px-6 py-3.5 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-1 hover:bg-[#245543] sm:mt-8"
             >
               Build My Plan
               <ArrowIcon />
             </Link>
 
-            <p className="mt-5 max-w-lg text-xs leading-6 text-[#7a8982]">
+            <p className="mt-4 max-w-lg text-xs leading-6 text-[#7a8982] sm:mt-5">
               AI guidance is general information and does not replace advice
               from a qualified fitness professional.
             </p>
@@ -602,15 +596,15 @@ export default async function Home() {
 
           <Reveal delay={150}>
 
-            <div className="rounded-[2rem] border border-white bg-white p-5 shadow-xl shadow-[#315746]/10 sm:p-7">
+            <div className="rounded-[1.75rem] border border-white bg-white p-4 shadow-xl shadow-[#315746]/10 sm:rounded-[2rem] sm:p-7">
 
-              <div className="rounded-2xl bg-[#f6faf7] p-5">
+              <div className="rounded-2xl bg-[#f6faf7] p-4 sm:p-5">
 
                 <p className="text-xs font-semibold uppercase tracking-wider text-[#87968f]">
                   Your goal
                 </p>
 
-                <p className="mt-2 text-lg font-bold text-[#24483a]">
+                <p className="mt-2 text-base font-bold text-[#24483a] sm:text-lg">
                   Build muscle
                 </p>
 
@@ -618,7 +612,7 @@ export default async function Home() {
 
               <div className="mt-3 grid grid-cols-2 gap-3">
 
-                <div className="rounded-2xl bg-[#f6faf7] p-5">
+                <div className="rounded-2xl bg-[#f6faf7] p-4 sm:p-5">
 
                   <p className="text-xs text-[#87968f]">
                     Experience
@@ -630,7 +624,7 @@ export default async function Home() {
 
                 </div>
 
-                <div className="rounded-2xl bg-[#f6faf7] p-5">
+                <div className="rounded-2xl bg-[#f6faf7] p-4 sm:p-5">
 
                   <p className="text-xs text-[#87968f]">
                     Frequency
@@ -644,7 +638,7 @@ export default async function Home() {
 
               </div>
 
-              <div className="mt-5 rounded-2xl bg-[#173d30] p-6 text-white">
+              <div className="mt-5 rounded-2xl bg-[#173d30] p-5 text-white sm:p-6">
 
                 <div className="flex items-center gap-2">
 
@@ -658,11 +652,11 @@ export default async function Home() {
 
                 </div>
 
-                <h3 className="mt-3 text-xl font-bold">
+                <h3 className="mt-3 text-lg font-bold sm:text-xl">
                   Your 5-Day Routine
                 </h3>
 
-                <div className="mt-5 space-y-2">
+                <div className="mt-4 space-y-2 sm:mt-5">
 
                   {[
                     "Chest & Triceps",
@@ -674,10 +668,10 @@ export default async function Home() {
 
                     <div
                       key={day}
-                      className="flex items-center justify-between rounded-xl bg-white/10 px-4 py-3"
+                      className="flex items-center justify-between rounded-xl bg-white/10 px-3.5 py-2.5 sm:px-4 sm:py-3"
                     >
 
-                      <span className="text-sm text-[#edf6f0]">
+                      <span className="text-xs text-[#edf6f0] sm:text-sm">
                         {day}
                       </span>
 
@@ -707,16 +701,16 @@ export default async function Home() {
 
       <section
         id="nutrition"
-        className="bg-white py-24 sm:py-32"
+        className="bg-white py-14 sm:py-24 sm:py-32"
       >
 
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-8">
 
-          <div className="grid items-center gap-14 lg:grid-cols-2">
+          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
 
             <Reveal className="order-2 lg:order-1">
 
-              <div className="rounded-[2rem] border border-[#e1eae5] bg-[#f7faf8] p-6 shadow-sm sm:p-8">
+              <div className="rounded-[1.75rem] border border-[#e1eae5] bg-[#f7faf8] p-4 shadow-sm sm:rounded-[2rem] sm:p-8">
 
                 <div className="flex items-center justify-between">
 
@@ -726,19 +720,19 @@ export default async function Home() {
                       Today's suggestion
                     </p>
 
-                    <h3 className="mt-1 text-xl font-bold text-[#24483a]">
+                    <h3 className="mt-1 text-lg font-bold text-[#24483a] sm:text-xl">
                       Post-workout fuel
                     </h3>
 
                   </div>
 
-                  <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#e1eee7]">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#e1eee7] sm:h-11 sm:w-11">
                     🥗
                   </div>
 
                 </div>
 
-                <div className="mt-6 rounded-2xl bg-white p-5">
+                <div className="mt-5 rounded-2xl bg-white p-4 sm:mt-6 sm:p-5">
 
                   <h4 className="font-bold text-[#315047]">
                     Protein-rich recovery meal
@@ -770,7 +764,7 @@ export default async function Home() {
 
                 </div>
 
-                <div className="mt-3 rounded-2xl bg-[#173d30] p-5 text-white">
+                <div className="mt-3 rounded-2xl bg-[#173d30] p-4 text-white sm:p-5">
 
                   <p className="text-xs uppercase tracking-wider text-[#a8cbb7]">
                     Recommended from NutriFit Shop
@@ -807,11 +801,11 @@ export default async function Home() {
               className="order-1 lg:order-2"
             >
 
-              <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#5d9c7b]">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#5d9c7b] sm:text-sm">
                 Fuel your progress
               </p>
 
-              <h2 className="mt-4 text-3xl font-bold leading-tight tracking-tight text-[#173d30] sm:text-5xl">
+              <h2 className="mt-3 text-2xl font-bold leading-tight tracking-tight text-[#173d30] sm:mt-4 sm:text-3xl lg:text-5xl">
 
                 Nutrition guidance
 
@@ -821,13 +815,13 @@ export default async function Home() {
 
               </h2>
 
-              <p className="mt-6 leading-8 text-[#687a72]">
+              <p className="mt-4 leading-7 text-[#687a72] sm:mt-6 sm:leading-8">
                 Tell NutriFit about your workout, fitness objective and dietary
                 preferences. The platform can provide general nutrition
                 suggestions and surface relevant products.
               </p>
 
-              <div className="mt-7 space-y-4">
+              <div className="mt-5 space-y-3 sm:mt-7 sm:space-y-4">
 
                 {[
                   "Goal-oriented food suggestions",
@@ -841,7 +835,7 @@ export default async function Home() {
                     className="flex items-center gap-3"
                   >
 
-                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#e1eee7] text-[#397054]">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#e1eee7] text-[#397054]">
                       <CheckIcon />
                     </span>
 
@@ -869,29 +863,29 @@ export default async function Home() {
 
       <section
         id="challenges"
-        className="bg-[#173d30] py-24 text-white sm:py-32"
+        className="bg-[#173d30] py-14 text-white sm:py-24 sm:py-32"
       >
 
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-8">
 
           <Reveal className="mx-auto max-w-3xl text-center">
 
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#9ec5ad]">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#9ec5ad] sm:text-sm">
               Stay consistent
             </p>
 
-            <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-5xl">
+            <h2 className="mt-3 text-2xl font-bold tracking-tight sm:mt-4 sm:text-3xl lg:text-5xl">
               Make progress feel rewarding.
             </h2>
 
-            <p className="mt-5 leading-7 text-[#b8cec2] sm:text-lg">
+            <p className="mt-4 leading-7 text-[#b8cec2] sm:mt-5 sm:text-lg">
               Build streaks, collect points, complete challenges and climb
               through ranks as you keep showing up.
             </p>
 
           </Reveal>
 
-          <div className="mt-16 grid gap-5 md:grid-cols-3">
+          <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-16 sm:grid-cols-3 sm:gap-5">
 
             {[
               {
@@ -919,27 +913,27 @@ export default async function Home() {
                 delay={index * 100}
               >
 
-                <div className="rounded-3xl border border-white/10 bg-white/5 p-7 backdrop-blur transition-all duration-500 hover:-translate-y-2 hover:bg-white/10">
+                <div className="rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur transition-all duration-500 hover:-translate-y-2 hover:bg-white/10 sm:p-7">
 
-                  <div className="text-3xl">
+                  <div className="text-2xl sm:text-3xl">
                     {item.icon}
                   </div>
 
-                  <div className="mt-7">
+                  <div className="mt-5 sm:mt-7">
 
-                    <h3 className="text-xl font-bold">
+                    <h3 className="text-lg font-bold sm:text-xl">
                       {item.title}
                     </h3>
 
-                    <p className="mt-3 text-sm leading-6 text-[#b8cec2]">
+                    <p className="mt-2.5 text-sm leading-6 text-[#b8cec2] sm:mt-3">
                       {item.text}
                     </p>
 
                   </div>
 
-                  <div className="mt-7 border-t border-white/10 pt-5">
+                  <div className="mt-5 border-t border-white/10 pt-4 sm:mt-7 sm:pt-5">
 
-                    <span className="text-2xl font-bold text-[#b6d9c4]">
+                    <span className="text-xl font-bold text-[#b6d9c4] sm:text-2xl">
                       {item.value}
                     </span>
 
@@ -961,23 +955,23 @@ export default async function Home() {
           CUSTOMER JOURNEY
       ========================================= */}
 
-      <section className="bg-[#f7faf8] py-24 sm:py-32">
+      <section className="bg-[#f7faf8] py-14 sm:py-24 sm:py-32">
 
-        <div className="mx-auto max-w-6xl px-5 sm:px-8">
+        <div className="mx-auto max-w-6xl px-4 sm:px-8">
 
           <Reveal className="text-center">
 
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#5d9c7b]">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#5d9c7b] sm:text-sm">
               Your journey
             </p>
 
-            <h2 className="mt-4 text-3xl font-bold tracking-tight text-[#173d30] sm:text-5xl">
+            <h2 className="mt-3 text-2xl font-bold tracking-tight text-[#173d30] sm:mt-4 sm:text-3xl lg:text-5xl">
               Discover. Train. Fuel. Track.
             </h2>
 
           </Reveal>
 
-          <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-8 grid grid-cols-1 gap-3 sm:mt-14 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
 
             {[
               [
@@ -1007,17 +1001,17 @@ export default async function Home() {
                 delay={index * 100}
               >
 
-                <div className="rounded-3xl bg-white p-7 shadow-sm ring-1 ring-[#e3ebe6]">
+                <div className="rounded-3xl bg-white p-5 shadow-sm ring-1 ring-[#e3ebe6] sm:p-7">
 
                   <span className="text-xs font-bold text-[#83a393]">
                     {number}
                   </span>
 
-                  <h3 className="mt-6 text-xl font-bold text-[#24483a]">
+                  <h3 className="mt-4 text-lg font-bold text-[#24483a] sm:mt-6 sm:text-xl">
                     {title}
                   </h3>
 
-                  <p className="mt-3 text-sm leading-6 text-[#718079]">
+                  <p className="mt-2.5 text-sm leading-6 text-[#718079] sm:mt-3">
                     {text}
                   </p>
 
@@ -1037,11 +1031,11 @@ export default async function Home() {
           FINAL CTA
       ========================================= */}
 
-      <section className="bg-white px-5 py-20 sm:px-8 sm:py-28">
+      <section className="bg-white px-4 py-12 sm:px-8 sm:py-20 sm:py-28">
 
         <Reveal>
 
-          <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] bg-[#dfeee5] px-7 py-16 text-center sm:px-12">
+          <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[1.75rem] bg-[#dfeee5] px-5 py-10 text-center sm:rounded-[2rem] sm:px-12 sm:py-16">
 
             <div className="absolute -right-20 -top-20 h-60 w-60 rounded-full bg-white/40 blur-3xl" />
 
@@ -1049,11 +1043,11 @@ export default async function Home() {
 
             <div className="relative">
 
-              <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#4d765f]">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#4d765f] sm:text-sm">
                 Start your journey
               </p>
 
-              <h2 className="mx-auto mt-4 max-w-2xl text-3xl font-bold tracking-tight text-[#173d30] sm:text-5xl">
+              <h2 className="mx-auto mt-3 max-w-2xl text-2xl font-bold tracking-tight text-[#173d30] sm:mt-4 sm:text-3xl lg:text-5xl">
 
                 Train smarter.
 
@@ -1063,14 +1057,14 @@ export default async function Home() {
 
               </h2>
 
-              <p className="mx-auto mt-5 max-w-xl leading-7 text-[#61756b]">
+              <p className="mx-auto mt-4 max-w-xl leading-7 text-[#61756b] sm:mt-5">
                 Create your NutriFit account and start building a fitness
                 journey designed around you.
               </p>
 
               <Link
                 href="/signup"
-                className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#173d30] px-7 py-4 text-sm font-bold text-white shadow-xl shadow-[#173d30]/15 transition-all duration-300 hover:-translate-y-1 hover:bg-[#245543]"
+                className="mt-6 inline-flex items-center gap-3 rounded-full bg-[#173d30] px-6 py-3.5 text-sm font-bold text-white shadow-xl shadow-[#173d30]/15 transition-all duration-300 hover:-translate-y-1 hover:bg-[#245543] sm:mt-8 sm:px-7 sm:py-4"
               >
                 Get Started
                 <ArrowIcon />
@@ -1090,7 +1084,7 @@ export default async function Home() {
 
       <footer className="border-t border-[#dfe8e3] bg-[#f7faf8]">
 
-        <div className="mx-auto flex max-w-7xl flex-col gap-8 px-5 py-10 sm:px-8 md:flex-row md:items-center md:justify-between">
+        <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-8 sm:gap-8 sm:px-8 sm:py-10 md:flex-row md:items-center md:justify-between">
 
           <div>
 
@@ -1104,7 +1098,7 @@ export default async function Home() {
 
           </div>
 
-          <div className="flex flex-wrap gap-5 text-sm text-[#66776f]">
+          <div className="flex flex-wrap gap-4 text-sm text-[#66776f] sm:gap-5">
 
             <a
               href="#features"
