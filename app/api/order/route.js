@@ -224,7 +224,7 @@ export async function POST(req) {
     let igst = 0;
 
     if (
-      address.state?.trim().toLowerCase() ===
+      address.state?.trim()?.toLowerCase() ===
       BUSINESS_STATE.toLowerCase()
     ) {
       cgst =

@@ -14,17 +14,18 @@ export default function GamePage() {
   const [instaUser, setInstaUser] = useState("");
   const [hasEnteredInsta, setHasEnteredInsta] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
-  
+
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(15);
   const [gameOver, setGameOver] = useState(false);
   const [isWin, setIsWin] = useState(false);
-  const [ballLeft, setBallLeft] = useState(0);
+  const [ballPos, setBallPos] = useState({ x: 50, y: 50 });
 
-  const ballRef = useRef(null);
   const gameAreaRef = useRef(null);
   const timerRef = useRef(null);
   const animationRef = useRef(null);
+  const velocityRef = useRef({ vx: 3, vy: 3 });
+  const directionTimeoutRef = useRef(null);
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -43,33 +44,72 @@ export default function GamePage() {
     return () => clearTimeout(timerRef.current);
   }, [isPlaying, timeLeft, score]);
 
+  // ============================================================
+  // MOVEMENT — bounces off the walls of the square arena
+  // ============================================================
   useEffect(() => {
-    let speed = 20; // very fast
-    let direction = 1;
+    const animate = () => {
+      setBallPos((prev) => {
+        let { x, y } = prev;
+        let { vx, vy } = velocityRef.current;
 
-    const animateBall = () => {
-      if (!isPlaying || !gameAreaRef.current) return;
+        let nextX = x + vx;
+        let nextY = y + vy;
 
-      setBallLeft((prev) => {
-        let next = prev + speed * direction;
-        if (next >= 100) {
-          next = 100;
-          direction = -1;
-        } else if (next <= 0) {
-          next = 0;
-          direction = 1;
+        if (nextX >= 92) {
+          nextX = 92;
+          vx = -Math.abs(vx);
+        } else if (nextX <= 8) {
+          nextX = 8;
+          vx = Math.abs(vx);
         }
-        return next;
+
+        if (nextY >= 92) {
+          nextY = 92;
+          vy = -Math.abs(vy);
+        } else if (nextY <= 8) {
+          nextY = 8;
+          vy = Math.abs(vy);
+        }
+
+        velocityRef.current = { vx, vy };
+
+        return { x: nextX, y: nextY };
       });
 
-      animationRef.current = requestAnimationFrame(animateBall);
+      animationRef.current = requestAnimationFrame(animate);
     };
 
     if (isPlaying) {
-      animationRef.current = requestAnimationFrame(animateBall);
+      animationRef.current = requestAnimationFrame(animate);
     }
 
     return () => cancelAnimationFrame(animationRef.current);
+  }, [isPlaying]);
+
+  // ============================================================
+  // RANDOM DIRECTION CHANGES — keeps the motion unpredictable,
+  // not just a bounce pattern
+  // ============================================================
+  useEffect(() => {
+    if (!isPlaying) return;
+
+    function randomizeVelocity() {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 2.8 + Math.random() * 2.7;
+
+      velocityRef.current = {
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+      };
+
+      const nextDelay = 180 + Math.random() * 380;
+      directionTimeoutRef.current = setTimeout(randomizeVelocity, nextDelay);
+    }
+
+    randomizeVelocity();
+
+    return () => clearTimeout(directionTimeoutRef.current);
   }, [isPlaying]);
 
   const startGame = () => {
@@ -77,6 +117,7 @@ export default function GamePage() {
     setTimeLeft(15);
     setGameOver(false);
     setIsWin(false);
+    setBallPos({ x: 50, y: 50 });
     setIsPlaying(true);
   };
 
@@ -86,6 +127,7 @@ export default function GamePage() {
     setIsWin(win);
     cancelAnimationFrame(animationRef.current);
     clearTimeout(timerRef.current);
+    clearTimeout(directionTimeoutRef.current);
 
     if (win) {
       const REWARD_ID = "600000000000000000000000";
@@ -96,29 +138,35 @@ export default function GamePage() {
     }
   };
 
+  // ============================================================
+  // TAP DETECTION — hit-tests against the ball's actual position,
+  // not a fixed zone
+  // ============================================================
   const handleAreaClick = (e) => {
     if (!isPlaying) return;
 
-    // Check if the click is in the middle zone (40% to 60% of the game area)
     const gameArea = gameAreaRef.current;
     if (!gameArea) return;
 
     const rect = gameArea.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
-    const clickPercent = (clickX / rect.width) * 100;
+    const clickY = e.clientY - rect.top;
 
-    // Center area is between 40% and 60%
-    if (clickPercent >= 40 && clickPercent <= 60) {
-      // Check if the ball is currently in the center area
-      if (ballLeft >= 40 && ballLeft <= 60) {
-        const newScore = score + 1;
-        setScore(newScore);
-        
-        // Flash effect or sound could go here
-        
-        if (newScore >= 5) {
-          endGame(true);
-        }
+    const ballCenterX = (ballPos.x / 100) * rect.width;
+    const ballCenterY = (ballPos.y / 100) * rect.height;
+
+    const distance = Math.sqrt(
+      (clickX - ballCenterX) ** 2 + (clickY - ballCenterY) ** 2
+    );
+
+    const hitRadius = 30;
+
+    if (distance <= hitRadius) {
+      const newScore = score + 1;
+      setScore(newScore);
+
+      if (newScore >= 5) {
+        endGame(true);
       }
     }
   };
@@ -170,7 +218,7 @@ export default function GamePage() {
         ) : (
           <div className="bg-white p-6 rounded-xl shadow-lg dark:bg-gray-800 text-center">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-              Hit the Ball 5 Times in 15 Seconds!
+              Tap the Ball 5 Times in 15 Seconds!
             </h2>
 
             {!isPlaying && !gameOver && (
@@ -188,28 +236,24 @@ export default function GamePage() {
                   <span>Score: {score} / 5</span>
                   <span>Time: {timeLeft}s</span>
                 </div>
-                
-                {/* Game Area */}
-                <div 
+
+                {/* Square Game Arena */}
+                <div
                   ref={gameAreaRef}
                   onClick={handleAreaClick}
-                  className="relative w-full h-32 bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden cursor-crosshair border-2 border-transparent"
+                  className="relative mx-auto aspect-square w-full max-w-xs bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden cursor-crosshair border-2 border-transparent select-none"
                 >
-                  {/* Center Target Zone */}
-                  <div className="absolute top-0 bottom-0 left-[40%] right-[40%] bg-amber-100 dark:bg-amber-900/30 border-x-2 border-dashed border-amber-400 pointer-events-none">
-                    <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xs font-bold text-amber-600/50 uppercase tracking-widest whitespace-nowrap">
-                      Click Here
-                    </span>
-                  </div>
-                  
                   {/* The Ball */}
-                  <div 
-                    className="absolute top-1/2 w-10 h-10 bg-red-500 rounded-full shadow-lg transform -translate-y-1/2 transition-none pointer-events-none"
-                    style={{ left: `calc(${ballLeft}% - 1.25rem)` }}
+                  <div
+                    className="absolute h-10 w-10 bg-red-500 rounded-full shadow-lg transition-none pointer-events-none"
+                    style={{
+                      left: `calc(${ballPos.x}% - 1.25rem)`,
+                      top: `calc(${ballPos.y}% - 1.25rem)`,
+                    }}
                   />
                 </div>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Click inside the dashed middle area when the ball is there!
+                  Tap the ball as fast as you can — it won't sit still!
                 </p>
               </div>
             )}

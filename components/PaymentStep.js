@@ -56,6 +56,9 @@ export default function PaymentStep() {
       if (!res.ok) {
         toast.error(data.error || "Payment failed. Cant order more than once at a time!");
         setLoading(false);
+        if (typeof setGlobalLoading === "function") {
+          setGlobalLoading(false);
+        }
         return;
       }
 
@@ -79,7 +82,7 @@ export default function PaymentStep() {
         router.push(`/order-success?id=${data.order._id}`);
 
         setTimeout(() => {
-          setGlobalLoading(false); // STOP LOADER AFTER PAGE LOAD FEEL
+          if (typeof setGlobalLoading === "function") setGlobalLoading(false); // STOP LOADER AFTER PAGE LOAD FEEL
         }, 800);
       }, 200);
 
@@ -89,6 +92,9 @@ export default function PaymentStep() {
       toast.error("Something went wrong");
     }
     setLoading(false);
+    if (typeof setGlobalLoading === "function") {
+      setGlobalLoading(false);
+    }
   };
   return (
     <div
