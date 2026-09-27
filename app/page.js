@@ -161,7 +161,7 @@ export default async function Home() {
 
         <div className="pointer-events-none absolute -bottom-40 -left-40 h-[500px] w-[500px] rounded-full bg-[#e5eee8] blur-3xl" />
 
-        <div className="relative mx-auto grid w-full max-w-7xl items-center gap-10 px-4 sm:px-8 lg:grid-cols-2 lg:gap-12">
+        <div className="relative mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-10 px-4 sm:px-8 lg:grid-cols-2 lg:gap-12">
 
           {/* Hero text */}
 
@@ -553,7 +553,7 @@ export default async function Home() {
 
         <div className="absolute right-0 top-0 h-80 w-80 rounded-full bg-[#cce5d6]/50 blur-3xl" />
 
-        <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-8 lg:grid-cols-2 lg:gap-14">
+        <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 sm:px-8 lg:grid-cols-2 lg:gap-14">
 
           <Reveal>
 
@@ -706,7 +706,7 @@ export default async function Home() {
 
         <div className="mx-auto max-w-7xl px-4 sm:px-8">
 
-          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-14">
 
             <Reveal className="order-2 lg:order-1">
 

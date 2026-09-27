@@ -350,6 +350,7 @@ export default function DashboardNavbar({ user }) {
 
         {/* Navigation */}
         <nav className="flex-1 space-y-1 overflow-y-auto p-4">
+          {isLoggedIn && (
           <MobileNavItem
             href="/dashboard"
             icon={<LayoutDashboard size={19} />}
@@ -357,6 +358,8 @@ export default function DashboardNavbar({ user }) {
             active={isActive(pathname, "/dashboard")}
             onClick={() => setSidebarOpen(false)}
           />
+          )}
+          {isLoggedIn && (
           <MobileNavItem
             href="/dashboard/today"
             icon={<Activity size={19} />}
@@ -364,6 +367,8 @@ export default function DashboardNavbar({ user }) {
             active={isActive(pathname, "/dashboard/today")}
             onClick={() => setSidebarOpen(false)}
           />
+          )}
+          {isLoggedIn && (
           <MobileNavItem
             href="/dashboard/workout"
             icon={<Dumbbell size={19} />}
@@ -371,6 +376,8 @@ export default function DashboardNavbar({ user }) {
             active={isActive(pathname, "/dashboard/workout")}
             onClick={() => setSidebarOpen(false)}
           />
+          )}
+          {isLoggedIn && (
           <MobileNavItem
             href="/dashboard/nutrition"
             icon={<Utensils size={19} />}
@@ -378,6 +385,8 @@ export default function DashboardNavbar({ user }) {
             active={isActive(pathname, "/dashboard/nutrition")}
             onClick={() => setSidebarOpen(false)}
           />
+          )}
+          {isLoggedIn && (
           <MobileNavItem
             href="/dashboard/coach"
             icon={<Sparkles size={19} />}
@@ -385,6 +394,8 @@ export default function DashboardNavbar({ user }) {
             active={isActive(pathname, "/dashboard/coach")}
             onClick={() => setSidebarOpen(false)}
           />
+          )}
+          {isLoggedIn && (
           <MobileNavItem
             href="/dashboard/insights"
             icon={<Sparkles size={19} />}
@@ -392,6 +403,8 @@ export default function DashboardNavbar({ user }) {
             active={isActive(pathname, "/dashboard/insights")}
             onClick={() => setSidebarOpen(false)}
           />
+          )}
+
           <MobileNavItem
             href="/market"
             icon={<ShoppingBag size={19} />}
