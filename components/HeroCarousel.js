@@ -51,7 +51,7 @@ export default function HeroCarousel() {
 
     return (
         <div
-            className="group relative mx-auto w-[88%] max-w-6xl 
+            className="group relative mx-auto w-[95%] max-w-6xl 
             overflow-hidden max-h-[70vh]
              md:max-h-[420px] lg:max-h-[520px]"
             style={{ aspectRatio: heroRatio }}
