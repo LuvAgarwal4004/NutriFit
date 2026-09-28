@@ -21,6 +21,8 @@ import connectDB from "@/db/connectDb";
 import FitnessProfile from "@/models/FitnessProfile";
 import WorkoutLog from "@/models/WorkoutLog";
 import NutritionLog from "@/models/NutritionLog";
+import Image from "next/image";
+import SmartLink from "@/components/SmartLink";
 
 
 // ============================================================
@@ -171,7 +173,17 @@ export default async function DashboardPage() {
 
         <DashboardStats />
 
+        <div
+          className="group relative mx-auto w-[92%] max-w-6xl 
+            rounded-[0.5rem]
+            overflow-hidden max-h-[70vh]
+             md:max-h-[420px] lg:max-h-[520px]"
+        >
+          <SmartLink href="/market">
+            <Image src="explore.jpeg"/>
+          </SmartLink>
 
+        </div>
         {/* =====================================================
             TODAY — HERO CARD
         ===================================================== */}
@@ -191,11 +203,10 @@ export default async function DashboardPage() {
 
                 <div className="inline-flex items-center gap-2 rounded-full bg-[#edf6f0] px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-[#397054] sm:px-4 sm:text-xs">
                   <span
-                    className={`h-2 w-2 rounded-full ${
-                      stats.workoutCompletedToday
+                    className={`h-2 w-2 rounded-full ${stats.workoutCompletedToday
                         ? "bg-[#397054]"
                         : "animate-pulse bg-[#f59e0b]"
-                    }`}
+                      }`}
                   />
                   {stats.workoutCompletedToday
                     ? "Completed"
