@@ -173,31 +173,29 @@ export default async function DashboardPage() {
 
         <DashboardStats />
 
-        <div
-          className="group relative mx-auto w-[92%] max-w-6xl 
-            rounded-[0.5rem]
-            overflow-hidden max-h-[70vh]
-             md:max-h-[420px] lg:max-h-[520px]"
-        >
-          <SmartLink href="/market">
-            <Image src="explore.jpeg"/>
-          </SmartLink>
 
-        </div>
+        {/* =====================================================
+            TODAY HERO CARD + PRODUCT EXPLORE BANNER
+            (stacked on mobile, side by side on desktop)
+        ===================================================== */}
+
+        <div className="mt-5 grid gap-5 sm:mt-6 sm:gap-6 lg:grid-cols-2 lg:items-stretch">
+
+
         {/* =====================================================
             TODAY — HERO CARD
         ===================================================== */}
 
-        <section className="mt-5 sm:mt-6">
+        <section className="h-full">
 
           <Link
             href="/dashboard/today"
-            className="group relative block overflow-hidden rounded-[1.75rem] border border-[#e1eae5] bg-white p-5 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl sm:rounded-[2.5rem] sm:p-8 lg:p-10"
+            className="group relative block h-full overflow-hidden rounded-[1.75rem] border border-[#e1eae5] bg-white p-5 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl sm:rounded-[2.5rem] sm:p-8 lg:p-10"
           >
 
             <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#dceee3] opacity-60 blur-3xl transition-transform duration-700 group-hover:scale-110" />
 
-            <div className="relative flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
+            <div className="relative flex h-full flex-col gap-6 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
 
               <div className="max-w-xl">
 
@@ -260,6 +258,26 @@ export default async function DashboardPage() {
           </Link>
 
         </section>
+
+
+        {/* PRODUCT EXPLORE BANNER */}
+
+        <div
+          className="group relative aspect-[16/9] w-full overflow-hidden rounded-[1.75rem] border border-[#e1eae5] shadow-sm sm:rounded-[2.5rem] lg:aspect-auto lg:h-full lg:min-h-[320px]"
+        >
+          <SmartLink href="/market">
+            <Image
+              src="/explore.jpeg"
+              alt="Explore the NutriFit market"
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          </SmartLink>
+
+        </div>
+
+        </div>
 
 
         {/* =====================================================
