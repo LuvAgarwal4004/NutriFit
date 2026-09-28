@@ -263,15 +263,16 @@ export default async function DashboardPage() {
         {/* PRODUCT EXPLORE BANNER */}
 
         <div
-          className="group relative aspect-[16/9] w-full overflow-hidden rounded-[1.75rem] border border-[#e1eae5] shadow-sm sm:rounded-[2.5rem] lg:aspect-auto lg:h-full lg:min-h-[320px]"
+          className="group relative flex w-full items-center justify-center overflow-hidden rounded-[1.75rem] border border-[#e1eae5] bg-white shadow-sm sm:rounded-[2.5rem] lg:h-full"
         >
           <SmartLink href="/market">
             <Image
               src="/explore.jpeg"
               alt="Explore the NutriFit market"
-              fill
+              width={1600}
+              height={900}
               sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
+              className="block h-auto w-full"
             />
           </SmartLink>
 
