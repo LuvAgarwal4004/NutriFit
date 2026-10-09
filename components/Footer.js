@@ -222,7 +222,7 @@ export default function Footer() {
               <li>
                 {/* TODO: replace "#" with your Instagram profile link */}
                 <a
-                  href="#"
+                  href="https://www.instagram.com/nutriii.fit_?utm_source=qr&stkn=bHpmdGRtMmp3NTl2"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`inline-flex items-center gap-2.5 ${linkClass}`}
@@ -235,7 +235,7 @@ export default function Footer() {
               <li>
                 {/* TODO: replace "#" with your LinkedIn profile link */}
                 <a
-                  href="#"
+                  href="https://lnkd.in/p/ejG5qXJz"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`inline-flex items-center gap-2.5 ${linkClass}`}
