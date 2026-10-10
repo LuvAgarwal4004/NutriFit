@@ -4,7 +4,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 import Reveal from "./Reveal";
-import HeroCarousel from "@/components/HeroCarousel";
+import HeroCarousel from "@/components/HeroCarouselnologin";
+import SmartLink from "@/components/SmartLink";
 
 /* =========================================
    Arrow Icon
@@ -113,7 +114,12 @@ export default async function Home() {
             >
               Challenges
             </a>
-
+            <SmartLink
+              href="/market"
+              label="Products"
+            >
+              Products
+            </SmartLink>
           </nav>
 
           {/* Authentication */}
@@ -348,11 +354,10 @@ export default async function Home() {
                       <div className="flex items-center gap-2.5 sm:gap-3">
 
                         <div
-                          className={`flex h-6 w-6 items-center justify-center rounded-full sm:h-7 sm:w-7 ${
-                            index < 2
+                          className={`flex h-6 w-6 items-center justify-center rounded-full sm:h-7 sm:w-7 ${index < 2
                               ? "bg-[#dceee3] text-[#397054]"
                               : "bg-[#eef2ef] text-[#81928a]"
-                          }`}
+                            }`}
                         >
                           {index < 2 ? <CheckIcon /> : null}
                         </div>
@@ -367,8 +372,8 @@ export default async function Home() {
                         {index === 0
                           ? "4 × 8"
                           : index === 1
-                          ? "3 × 10"
-                          : "3 × 12"}
+                            ? "3 × 10"
+                            : "3 × 12"}
                       </span>
 
                     </div>
