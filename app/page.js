@@ -117,6 +117,8 @@ export default async function Home() {
             <SmartLink
               href="/market"
               label="Products"
+              className="text-sm font-medium text-[#53665e] transition-colors hover:text-[#173d30]"
+
             >
               Products
             </SmartLink>
@@ -124,7 +126,17 @@ export default async function Home() {
 
           {/* Authentication */}
 
-          <div className="flex items-center gap-1.5 sm:gap-3">
+          <div className="flex items-center gap-1 sm:gap-3">
+
+            {/* Mobile / tablet Products link (desktop nav is hidden below lg) */}
+
+            <SmartLink
+              href="/market"
+              label="Products"
+              className="rounded-full px-2.5 py-2 text-xs font-semibold text-[#315047] transition-colors hover:bg-[#eaf2ed] sm:px-4 sm:py-2.5 sm:text-sm lg:hidden"
+            >
+              Products
+            </SmartLink>
 
             <Link
               href="/login"
