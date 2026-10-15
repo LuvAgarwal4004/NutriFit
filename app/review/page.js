@@ -10,6 +10,7 @@ import {
   MessageSquare,
   Send,
   Star,
+  Trash2,
 } from "lucide-react";
 import Image from "next/image";
 
@@ -52,6 +53,7 @@ export default function ReviewPage() {
 
   const [reviews, setReviews] = useState([]);
   const [loadingReviews, setLoadingReviews] = useState(true);
+  const [deletingId, setDeletingId] = useState(null);
 
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
@@ -177,6 +179,39 @@ export default function ReviewPage() {
     }
   };
 
+  // ============================================================
+  // DELETE — only the review's owner can do this (enforced on the server too)
+  // ============================================================
+
+  const handleDelete = async (reviewId) => {
+    if (!window.confirm("Delete your review? This can't be undone.")) {
+      return;
+    }
+
+    try {
+      setDeletingId(reviewId);
+
+      const res = await fetch("/api/reviews", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: reviewId }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Could not delete your review");
+      }
+
+      setReviews((prev) => prev.filter((r) => r._id !== reviewId));
+      toast.success("Review deleted");
+    } catch (error) {
+      toast.error(error.message || "Something went wrong");
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
   return (
     <main className="bg-white text-[#17231e]">
 
@@ -274,7 +309,12 @@ export default function ReviewPage() {
                 </div>
               ) : (
                 reviews.map((review) => (
-                  <ReviewCard key={review._id} review={review} />
+                  <ReviewCard
+                    key={review._id}
+                    review={review}
+                    onDelete={handleDelete}
+                    deleting={deletingId === review._id}
+                  />
                 ))
               )}
             </div>
@@ -424,7 +464,7 @@ function SuccessCard({ story }) {
 // REVIEW CARD
 // ================================================================
 
-function ReviewCard({ review }) {
+function ReviewCard({ review, onDelete, deleting }) {
   const initial = review.name?.[0]?.toUpperCase() || "?";
 
   return (
@@ -435,7 +475,7 @@ function ReviewCard({ review }) {
           {initial}
         </span>
 
-        <div>
+        <div className="min-w-0 flex-1">
           <p className="font-bold text-[#24483a]">
             {review.name || "Anonymous"}
           </p>
@@ -454,6 +494,19 @@ function ReviewCard({ review }) {
             ))}
           </div>
         </div>
+
+        {review.isMine && (
+          <button
+            type="button"
+            onClick={() => onDelete(review._id)}
+            disabled={deleting}
+            aria-label="Delete your review"
+            title="Delete your review"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[#a8bab0] transition hover:bg-red-50 hover:text-red-500 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <Trash2 size={16} />
+          </button>
+        )}
       </div>
 
       <p className="mt-3 text-sm leading-6 text-[#52665d]">
