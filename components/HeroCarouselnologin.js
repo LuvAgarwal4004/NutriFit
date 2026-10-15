@@ -122,7 +122,7 @@ function Banner({ desktop, mobile, href, alt, ratio, label, priority }) {
 
 export default function HeroCarousel() {
     return (
-        <section className="mx-auto w-[92%] max-w-6xl space-y-1 sm:space-y-2">
+        <section className="mx-auto w-[92%] max-w-6xl space-y-0 sm:space-y-2">
              {/* BOTTOM BANNER */}
             <Banner
                 desktop={BOTTOM_BANNER.desktop}
