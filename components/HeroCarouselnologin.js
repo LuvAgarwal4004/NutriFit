@@ -12,6 +12,9 @@ import SmartLink from "./SmartLink";
    - mobile  = shown on phones
    - ratio   = fallback shape before the image loads
                (it locks to the real image's shape after load)
+   - zoom    = 1 is normal. If your image has empty/white space
+               baked into its edges, raise it (1.05, 1.1, 1.15...)
+               to crop that space out.
 ========================================================= */
 
 const toSrc = (path) => (path.startsWith("/") ? path : `/${path}`);
@@ -22,6 +25,7 @@ const TOP_BANNER = {
     href: "/gamenologin",
     alt: "Smarter fitness. Better nutrition.",
     ratio: 4.5, // wide banner, like your screenshot
+    zoom: 1,
     label: "TOP BANNER IMAGE",
 };
 
@@ -31,6 +35,7 @@ const BOTTOM_BANNER = {
     href: "/market",
     alt: "Play and win free fuel",
     ratio: 6.3, // slimmer banner, like your screenshot
+    zoom: 1,
     label: "BOTTOM BANNER IMAGE",
 };
 
@@ -51,14 +56,16 @@ const DESKTOP_MEDIA = "(min-width: 768px)";
    Single banner (desktop image + phone image)
 ========================================================= */
 
-function Banner({ desktop, mobile, href, alt, ratio, label, priority }) {
+function Banner({ desktop, mobile, href, alt, ratio, zoom = 1, label, priority }) {
     const imgRef = useRef(null);
     const [heroRatio, setHeroRatio] = useState(ratio);
     const [failed, setFailed] = useState(false);
+    const [loaded, setLoaded] = useState(false);
 
     const updateRatio = (img) => {
         if (img?.naturalWidth && img?.naturalHeight) {
             setHeroRatio(img.naturalWidth / img.naturalHeight);
+            setLoaded(true);
         }
     };
 
@@ -86,13 +93,17 @@ function Banner({ desktop, mobile, href, alt, ratio, label, priority }) {
 
     return (
         <div
-            className="relative w-full overflow-hidden rounded-2xl bg-[#e3f0e8]"
+            className={`relative block w-full overflow-hidden rounded-2xl ${
+                loaded ? "" : "bg-[#e3f0e8]"
+            }`}
             style={{ aspectRatio: heroRatio }}
         >
-            {/* Placeholder (visible until you add your image) */}
-            <div className="absolute inset-0 flex items-center justify-center border-2 border-dashed border-[#b9d9c7] text-xs font-bold uppercase tracking-[0.18em] text-[#5d9c7b]">
-                {label}
-            </div>
+            {/* Placeholder (only visible until your image loads) */}
+            {!loaded && (
+                <div className="absolute inset-0 flex items-center justify-center border-2 border-dashed border-[#b9d9c7] text-xs font-bold uppercase tracking-[0.18em] text-[#5d9c7b]">
+                    {label}
+                </div>
+            )}
 
             <SmartLink href={href}>
                 {!failed && (
@@ -105,6 +116,10 @@ function Banner({ desktop, mobile, href, alt, ratio, label, priority }) {
                             {...imgProps}
                             ref={imgRef}
                             className="object-cover"
+                            style={{
+                                ...(imgProps.style || {}),
+                                transform: `scale(${zoom})`,
+                            }}
                             onLoad={(e) => updateRatio(e.currentTarget)}
                             onError={() => setFailed(true)}
                             fetchPriority={priority ? "high" : "auto"}
@@ -117,21 +132,24 @@ function Banner({ desktop, mobile, href, alt, ratio, label, priority }) {
 }
 
 /* =========================================================
-   Hero carousel: top banner, feature strip, bottom banner
+   Hero carousel: bottom banner, top banner, feature strip
+   (kept in the same order as your current file)
 ========================================================= */
 
 export default function HeroCarousel() {
     return (
-        <section className="mx-auto w-[92%] max-w-6xl space-y-0 sm:space-y-1">
-             {/* BOTTOM BANNER */}
+        <section className="mx-auto flex w-[92%] max-w-6xl flex-col gap-0">
+            {/* BOTTOM BANNER */}
             <Banner
                 desktop={BOTTOM_BANNER.desktop}
                 mobile={BOTTOM_BANNER.mobile}
                 href={BOTTOM_BANNER.href}
                 alt={BOTTOM_BANNER.alt}
                 ratio={BOTTOM_BANNER.ratio}
+                zoom={BOTTOM_BANNER.zoom}
                 label={BOTTOM_BANNER.label}
             />
+
             {/* TOP BANNER */}
             <Banner
                 desktop={TOP_BANNER.desktop}
@@ -139,13 +157,14 @@ export default function HeroCarousel() {
                 href={TOP_BANNER.href}
                 alt={TOP_BANNER.alt}
                 ratio={TOP_BANNER.ratio}
+                zoom={TOP_BANNER.zoom}
                 label={TOP_BANNER.label}
                 priority
             />
 
             {/* FEATURE STRIP */}
             {SHOW_FEATURE_STRIP && (
-                <div className="grid grid-cols-2 gap-x-3 gap-y-4 rounded-2xl bg-[#e9f3ed] p-4 md:grid-cols-4 md:gap-0 md:p-5">
+                <div className="mt-3 grid grid-cols-2 gap-x-3 gap-y-4 rounded-2xl bg-[#e9f3ed] p-4 md:grid-cols-4 md:gap-0 md:p-5">
                     {FEATURES.map((f, i) => (
                         <div
                             key={f.title}
@@ -168,8 +187,6 @@ export default function HeroCarousel() {
                     ))}
                 </div>
             )}
-
-           
         </section>
     );
 }
