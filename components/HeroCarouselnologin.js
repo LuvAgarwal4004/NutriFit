@@ -19,23 +19,23 @@ const toSrc = (path) => (path.startsWith("/") ? path : `/${path}`);
 const TOP_BANNER = {
     desktop: toSrc(images[0]), // PLACEHOLDER: replace with your top banner (desktop)
     mobile: toSrc(images[1]), // PLACEHOLDER: replace with your top banner (phone)
-    href: "/market",
+    href: "/gamenologin",
     alt: "Smarter fitness. Better nutrition.",
     ratio: 4.5, // wide banner, like your screenshot
     label: "TOP BANNER IMAGE",
 };
 
 const BOTTOM_BANNER = {
-    desktop: "/banner-play-desktop.jpeg", // PLACEHOLDER: replace with your bottom banner (desktop)
-    mobile: "/banner-play-mobile.jpeg", // PLACEHOLDER: replace with your bottom banner (phone)
-    href: "/gamenologin",
+    desktop: "/bannerdesktop.jpeg", // PLACEHOLDER: replace with your bottom banner (desktop)
+    mobile: "/bannermobile.jpeg", // PLACEHOLDER: replace with your bottom banner (phone)
+    href: "/market",
     alt: "Play and win free fuel",
     ratio: 6.3, // slimmer banner, like your screenshot
     label: "BOTTOM BANNER IMAGE",
 };
 
 // Set to false if you want to remove the 4-item strip between the banners
-const SHOW_FEATURE_STRIP = true;
+const SHOW_FEATURE_STRIP = false;
 
 const FEATURES = [
     { icon: "✦", title: "AI Coach & Nutritionist", text: "Personalized guidance" },
