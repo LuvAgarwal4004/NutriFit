@@ -122,6 +122,13 @@ export default async function Home() {
             >
               Products
             </SmartLink>
+            <SmartLink
+              href="/review"
+              label="Products"
+              className="rounded-full px-2.5 py-2 text-xs font-semibold text-[#315047] transition-colors hover:bg-[#eaf2ed] sm:px-4 sm:py-2.5 sm:text-sm lg:hidden"
+            >
+              Reviews
+            </SmartLink>
           </nav>
 
           {/* Authentication */}
@@ -137,7 +144,13 @@ export default async function Home() {
             >
               Products
             </SmartLink>
-
+            <SmartLink
+              href="/review"
+              label="Products"
+              className="rounded-full px-2.5 py-2 text-xs font-semibold text-[#315047] transition-colors hover:bg-[#eaf2ed] sm:px-4 sm:py-2.5 sm:text-sm lg:hidden"
+            >
+              Reviews
+            </SmartLink>
             <Link
               href="/login"
               className="rounded-full px-3 py-2 text-xs font-semibold text-[#315047] transition-colors hover:bg-[#eaf2ed] sm:px-4 sm:py-2.5 sm:text-sm"
@@ -367,8 +380,8 @@ export default async function Home() {
 
                         <div
                           className={`flex h-6 w-6 items-center justify-center rounded-full sm:h-7 sm:w-7 ${index < 2
-                              ? "bg-[#dceee3] text-[#397054]"
-                              : "bg-[#eef2ef] text-[#81928a]"
+                            ? "bg-[#dceee3] text-[#397054]"
+                            : "bg-[#eef2ef] text-[#81928a]"
                             }`}
                         >
                           {index < 2 ? <CheckIcon /> : null}
