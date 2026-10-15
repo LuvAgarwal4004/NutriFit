@@ -388,8 +388,8 @@ function SuccessCard({ story }) {
     <div className="overflow-hidden rounded-3xl border border-[#e1eae5] bg-white shadow-sm">
       
       <div className="grid grid-cols-2">        
-        <div className="relative aspect-[3/4] bg-[#e7ede9]">  
-         <Image src={story.image} alt="Before" fill className="object-cover" />
+        <div className="relative bg-[#e7ede9]">  
+         <Image src={story.image} fill className="object-cover" />
         </div>
       </div>
 
