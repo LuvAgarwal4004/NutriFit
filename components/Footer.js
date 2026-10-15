@@ -153,7 +153,11 @@ export default function Footer() {
                   Challenge
                 </SmartLink>
               </li>
-
+              <li>
+                <SmartLink href="/my-orders" className={linkClass}>
+                  My Orders
+                </SmartLink>
+              </li>
               <li>
                 <span className="text-sm font-medium text-[#c1d6ca]">
                   How It Works
@@ -197,8 +201,8 @@ export default function Footer() {
               </li>
 
               <li>
-                <SmartLink href="/my-orders" className={linkClass}>
-                  My Orders
+                <SmartLink href="/review" className={linkClass}>
+                  Reviews
                 </SmartLink>
               </li>
 
@@ -248,7 +252,29 @@ export default function Footer() {
             </ul>
 
           </div>
+          <div className="col-span-2 sm:col-span-1 lg:col-span-2">
 
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[#9fc2ad]">
+              Useful Links
+            </h3>
+
+            <ul className="mt-4 space-y-3 sm:mt-5">
+              <li>
+                
+                <a
+                  href="https://bohemescents.lovable.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`inline-flex items-center gap-2.5 ${linkClass}`}
+                >
+                  
+                  Boheme Fragrance Oils
+                </a>
+              </li>
+
+            </ul>
+
+          </div>
         </div>
 
 

@@ -28,7 +28,7 @@ const Page = () => {
                   Email
                 </p>
                 <p className="font-medium break-all">
-                  gupta.amisha2606@gmail.com
+                  Gupta.amisha@nutrifit.com
                 </p>
               </div>
             </div>
@@ -88,7 +88,7 @@ const Page = () => {
                   </p>
 
                   <p className="text-gray-500 text-sm break-all">
-                    gupta.amisha2606@gmail.com
+                    Gupta.amisha@nutrifit.com
                   </p>
                 </div>
 
