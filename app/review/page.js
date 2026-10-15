@@ -24,6 +24,7 @@ const SUCCESS_STORIES = [
     name: "Rahul",
     subtitle: "Lost 8 kg in 3 months",
     rating: 5,
+    image:"/rahul.jpg",
     quote: "Add this person's quote here.",
   },
   {
@@ -31,6 +32,7 @@ const SUCCESS_STORIES = [
     name: "Sakshi",
     subtitle: "Built 5 kg of lean muscle",
     rating: 5,
+    image:"/Sakshi.jpg",
     quote: "Add this person's quote here.",
   },
 ];
@@ -384,25 +386,11 @@ export default function ReviewPage() {
 function SuccessCard({ story }) {
   return (
     <div className="overflow-hidden rounded-3xl border border-[#e1eae5] bg-white shadow-sm">
-
-      <div className="grid grid-cols-2">
-
-        {/* BEFORE — empty placeholder, drop your image in here */}
-        <div className="relative aspect-[3/4] bg-[#e7ede9]">
-          <span className="absolute bottom-2 left-2 rounded-md bg-black/60 px-2 py-0.5 text-[10px] font-semibold text-white">
-            Before
-          </span>
-         <Image src="/rahul.jpg" alt="Before" fill className="object-cover" />
+      
+      <div className="grid grid-cols-2">        
+        <div className="relative aspect-[3/4] bg-[#e7ede9]">  
+         <Image src={story.image} alt="Before" fill className="object-cover" />
         </div>
-
-        {/* AFTER — empty placeholder, drop your image in here */}
-        <div className="relative aspect-[3/4] bg-[#dde7e1]">
-          <span className="absolute bottom-2 right-2 rounded-md bg-black/60 px-2 py-0.5 text-[10px] font-semibold text-white">
-            After
-          </span>
-         <Image src="/Sakshi.jpg" alt="After" fill className="object-cover" />
-        </div>
-
       </div>
 
       <div className="p-4">
