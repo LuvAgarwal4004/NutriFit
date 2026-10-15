@@ -11,6 +11,7 @@ import {
   Send,
   Star,
 } from "lucide-react";
+import Image from "next/image";
 
 const DRAFT_KEY = "nutrifit_review_draft";
 
@@ -391,7 +392,7 @@ function SuccessCard({ story }) {
           <span className="absolute bottom-2 left-2 rounded-md bg-black/60 px-2 py-0.5 text-[10px] font-semibold text-white">
             Before
           </span>
-          {/* e.g. <Image src="/reviews/priya-before.jpg" alt="Before" fill className="object-cover" /> */}
+         <Image src="/rahul.jpg" alt="Before" fill className="object-cover" />
         </div>
 
         {/* AFTER — empty placeholder, drop your image in here */}
@@ -399,7 +400,7 @@ function SuccessCard({ story }) {
           <span className="absolute bottom-2 right-2 rounded-md bg-black/60 px-2 py-0.5 text-[10px] font-semibold text-white">
             After
           </span>
-          {/* e.g. <Image src="/reviews/priya-after.jpg" alt="After" fill className="object-cover" /> */}
+         <Image src="/Sakshi.jpg" alt="After" fill className="object-cover" />
         </div>
 
       </div>
