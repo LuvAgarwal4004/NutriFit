@@ -26,8 +26,8 @@ const TOP_BANNER = {
 };
 
 const BOTTOM_BANNER = {
-    desktop: "/bannerdesktop.jpeg", // PLACEHOLDER: replace with your bottom banner (desktop)
-    mobile: "/bannermobile.jpeg", // PLACEHOLDER: replace with your bottom banner (phone)
+    desktop: "/bannerdesktop.jpg", // PLACEHOLDER: replace with your bottom banner (desktop)
+    mobile: "/bannerdesktop.jpg", // PLACEHOLDER: replace with your bottom banner (phone)
     href: "/market",
     alt: "Play and win free fuel",
     ratio: 6.3, // slimmer banner, like your screenshot
