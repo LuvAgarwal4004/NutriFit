@@ -26,7 +26,7 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "NutriFit",
-  description: "Get your Fitness up!",
+  description: "Explore affordable protein snacks and AI-powered fitness guidance with NutriFit. Get your Fitness up!",
 };
 export default async function RootLayout({ children }) {
 
